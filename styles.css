@@ -197,3 +197,327 @@ h1{font-size:clamp(48px,5vw,72px);line-height:1.04;letter-spacing:-1.5px}
 .callback-dialog .callback-form{border-top:0;margin-top:0;padding-top:4px}
 
 @media(max-width:600px){.order-cta{margin:14px auto;padding:22px}.contact-methods{grid-template-columns:1fr 1fr}}
+
+/* Legibility and consistent controls */
+body{font-size:18px;line-height:1.6}
+.topbar nav a{font-size:16px}
+.topbar>.button{font-size:16px;padding:17px 24px}
+.currency-bar{font-size:15px;line-height:1.5}
+.eyebrow{font-size:13px;letter-spacing:1.4px}
+.hero-copy .hero-actions .button,.hero-copy>.button{background:var(--red);color:#fff;border-color:var(--red);font-size:17px;padding:17px 26px;min-height:58px}
+.hero-copy .hero-actions .button:hover,.hero-copy>.button:hover{background:var(--deep);color:#fff;border-color:var(--deep);filter:none}
+.hero-copy .hero-actions .button:focus-visible,.hero-copy>.button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.benefit-icon{width:42px;height:42px;flex:none;fill:none;stroke:var(--red);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.benefits article{min-height:108px}
+.benefits b{font-size:18px}
+.benefits small{font-size:15px}
+.detail-info h2{font-size:34px;line-height:1.2}
+.detail-info>p{font-size:17px;line-height:1.5}
+.detail-meta{font-size:15px;line-height:1.5;padding-bottom:18px}
+.detail-price{padding:18px;margin:18px 0}
+.detail-price strong{font-size:30px}
+.detail-price small{font-size:16px;line-height:1.4}
+.detail-price .button,.vehicle-actions .button{font-size:16px;padding:15px 20px}
+.detail-info h3{font-size:22px;margin:24px 0 12px}
+.spec-table div{font-size:15px;line-height:1.45;padding:12px 14px;gap:16px}
+.spec-table b{font-weight:600;text-align:right}
+.disclaimer{font-size:14px!important;line-height:1.6;margin-top:16px!important}
+.crumb{font-size:14px}
+.tabs{gap:28px;margin-top:20px}
+.tabs button{font-size:17px;padding:16px 0}
+.car-detail-sections{height:500px;overflow-y:auto;scrollbar-gutter:stable;padding:24px 0;margin-bottom:0;border:0}
+.car-detail-sections h3{font-size:22px;margin-bottom:14px}
+.car-detail-sections p,.car-detail-sections li{font-size:16px;line-height:1.65}
+.car-detail-sections ul{padding-left:24px}
+.vehicle-page{padding-bottom:64px}
+.fineprint{font-size:14px;line-height:1.6}
+.notice{font-size:14px;line-height:1.6}
+@media(max-width:1150px){.topbar nav a{font-size:14px}.topbar>.button{font-size:14px;padding:14px 17px}}
+@media(max-width:900px){.topbar{height:86px}.topbar nav{top:86px}.topbar>.button{font-size:14px}.brand-logo{height:66px}.hero-copy .hero-actions .button,.hero-copy>.button{font-size:16px}}
+@media(max-width:700px){
+ .topbar{height:76px}.topbar nav{top:76px}.topbar>.button{font-size:12px;padding:10px 12px}
+ .hero-copy .hero-actions{max-width:360px}.hero-copy .hero-actions .button,.hero-copy>.button{width:100%;font-size:16px;min-height:54px}
+ .benefit-icon{width:32px;height:32px}.benefits b{font-size:15px}.benefits small{font-size:13px}
+ .detail-info h2{font-size:30px}.detail-info>p{font-size:16px}.detail-meta{font-size:14px}
+ .detail-price strong{font-size:26px}.detail-price small{font-size:15px}.detail-price .button,.vehicle-actions .button{font-size:15px}
+ .spec-table div{font-size:14px;padding:11px 12px;gap:10px}
+ .car-detail-sections{height:500px;padding:20px 0}.car-detail-sections p,.car-detail-sections li{font-size:15px}
+ .tabs{gap:18px}.tabs button{font-size:15px}
+ .currency-bar{font-size:12px}.fineprint,.notice{font-size:13px}
+}.sort-label,.result-count{font-size:15px}
+.catalog-tools select,.search input{font-size:16px}
+.cost-row,.broker-row{font-size:15px;line-height:1.5}
+.cost-row b,.broker-row>b{font-size:15px}
+.calc-field,.calc-link{font-size:15px;line-height:1.55}
+.total span{font-size:16px}.total small{font-size:14px}.total b{font-size:24px}
+.footer-contact,.footer-nav{font-size:16px}.footer-bottom{font-size:14px}
+/* Current refinement: clearer hierarchy and aligned homepage blocks */
+.topbar{height:102px;gap:clamp(18px,2vw,34px)}
+.topbar .brand{height:94px;min-width:275px;flex:0 0 275px;justify-content:flex-start;overflow:visible}
+.topbar .brand-logo{height:94px;max-width:270px;width:auto;object-fit:contain}
+.topbar nav{gap:clamp(14px,1.45vw,26px)}
+.topbar nav a{font-size:16px}
+.topbar>.button{min-height:54px;padding:14px 22px;white-space:nowrap}
+.footer-main .brand{height:auto;min-width:0;flex:none}
+.footer-main .brand-logo{height:64px;max-width:240px}
+.hero-copy{padding-top:82px;padding-bottom:92px}
+.hero-copy h1{max-width:780px;margin-bottom:20px;line-height:1.1}
+.hero-lead{max-width:660px;line-height:1.6;margin-top:0}
+.hero-lead br{display:none}
+.hero-points{max-width:760px;flex-wrap:wrap;row-gap:14px;line-height:1.5;margin:28px 0 0}
+.hero-copy .hero-actions,.hero-copy>.button{margin-top:34px}
+.hero-copy .hero-actions{gap:14px}
+.hero-copy .button,.vehicle-actions .button,.detail-price .button,.topbar>.button,.order-cta .button{min-height:56px;border-radius:11px;font-size:16px;font-weight:700;letter-spacing:0}
+.vehicle-actions{align-items:stretch}
+.vehicle-actions .button{flex:1}
+.benefits{margin-top:30px;padding:24px;gap:14px}
+.benefits article{min-height:112px;padding:18px 20px;gap:15px;border-radius:13px}
+.benefit-icon{width:48px;height:48px;flex:none;padding:8px;border-radius:14px;background:#fff0f0;fill:var(--red);stroke:none}
+.benefit-icon .icon-cutout{fill:none;stroke:#fff;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.benefit-icon .icon-cutout-fill{fill:#fff;stroke:none}
+.benefits b{font-size:18px;line-height:1.3}
+.benefits small{font-size:15px;line-height:1.45;margin-top:6px}
+.about-section{align-items:center;gap:clamp(36px,6vw,90px);padding-top:68px;padding-bottom:68px}
+.about-copy h2{max-width:680px;font-size:clamp(36px,3.2vw,46px);line-height:1.12;margin-bottom:18px}
+.about-copy p.about-intro{font-size:18px;line-height:1.65;margin:0 0 20px;color:#59616b}
+.about-note{display:grid;gap:4px;padding:15px 18px;border-left:4px solid var(--red);background:#faf5f5;border-radius:0 10px 10px 0;margin:0 0 24px;max-width:680px}
+.about-note b{font-size:16px;color:var(--ink)}
+.about-note span{font-size:15px;line-height:1.55;color:var(--muted)}
+.about-facts{display:grid;gap:12px}
+.about-facts article{display:grid;grid-template-columns:52px 1fr;align-items:start;gap:16px;padding:21px 22px;border:1px solid var(--line);border-radius:14px;background:#fff;min-height:118px}
+.about-facts article>b{font-size:24px;line-height:1;color:var(--red);font-weight:800}
+.about-facts article div{display:grid;gap:7px}
+.about-facts article strong{font-size:17px;line-height:1.35}
+.about-facts article span{font-size:15px;line-height:1.5;color:var(--muted)}
+.order-cta{width:min(1380px,92%);min-height:160px;padding:28px 36px;margin:20px auto 24px;gap:32px;border-radius:16px;align-items:center}
+.order-cta>div{max-width:840px}
+.order-cta .eyebrow{margin-bottom:5px}
+.order-cta h2{font-size:30px;line-height:1.2;margin:0 0 7px}
+.order-cta p{max-width:760px;font-size:16px;line-height:1.5}
+.order-cta .button{flex:0 0 230px}
+.featured-section{padding-top:18px;padding-bottom:42px}
+.featured-section .section-heading{margin-bottom:22px}
+.button,.button-light,.button-outline,.button-outline-light{transition:background-color .18s,color .18s,border-color .18s,box-shadow .18s}
+.button:focus-visible{outline:3px solid #d95a5a;outline-offset:3px}
+@media(max-width:1150px){.topbar{gap:14px}.topbar .brand{min-width:220px;flex-basis:220px}.topbar .brand-logo{height:80px;max-width:220px}.topbar nav{gap:12px}.topbar nav a{font-size:14px}.topbar>.button{padding:12px 15px;font-size:14px}}
+@media(max-width:900px){.topbar{height:86px}.topbar .brand{height:78px;min-width:0;flex:1}.topbar .brand-logo{height:78px;max-width:230px}.topbar nav{top:86px}.topbar>.button{min-height:48px}.about-section{gap:32px}.about-facts article{min-height:0}}
+@media(max-width:700px){
+ .topbar{height:76px}.topbar .brand{height:70px;flex:1;min-width:0}.topbar .brand-logo{height:68px;max-width:205px}.topbar nav{top:76px}
+ .hero-copy{padding:54px 6% 76px}.hero-copy h1{margin-bottom:14px}.hero-lead{font-size:18px;line-height:1.5}.hero-points{margin-top:22px;gap:10px 12px}.hero-copy .hero-actions,.hero-copy>.button{margin-top:24px}
+ .benefits{margin:20px auto 0;padding:14px;gap:9px}.benefits article{min-height:96px;padding:12px;gap:10px}.benefit-icon{width:38px;height:38px;padding:6px;border-radius:11px}.benefits b{font-size:15px}.benefits small{font-size:13px}
+ .about-section{padding-top:48px;padding-bottom:48px;gap:24px}.about-copy h2{font-size:32px}.about-copy p.about-intro{font-size:16px}.about-note{padding:13px 15px}.about-note span{font-size:14px}.about-facts{gap:9px}.about-facts article{grid-template-columns:38px 1fr;padding:16px;gap:11px}.about-facts article>b{font-size:20px}.about-facts article strong{font-size:15px}.about-facts article span{font-size:14px}
+ .order-cta{width:92%;min-height:0;align-items:stretch;gap:18px;padding:22px;margin:16px auto 18px}.order-cta h2{font-size:25px}.order-cta p{font-size:15px}.order-cta .button{flex:auto;width:100%}.featured-section{padding-top:14px}
+ .topbar>.button{font-size:12px;padding:9px 11px;min-height:42px}.footer-main .brand-logo{height:58px}
+}
+
+.benefits article{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.benefits article:hover{transform:translateY(-2px);border-color:#f0d2d2;box-shadow:0 8px 20px #af050510}
+
+/* Final alignment requested for vehicle actions and homepage hero */
+.topbar{padding-left:clamp(18px,2.2vw,38px)}
+.topbar .brand{flex-basis:275px}
+.hero-copy{width:min(820px,58%);max-width:none;margin:0;padding:clamp(58px,6vw,92px) 0 92px clamp(30px,6vw,96px)}
+.hero-copy h1{font-size:clamp(60px,6vw,84px);line-height:1.04;letter-spacing:-1.8px;max-width:740px;margin-bottom:22px}
+.hero-copy .hero-lead{font-size:clamp(22px,1.65vw,27px);line-height:1.55;max-width:690px}
+.hero-copy .hero-points{font-size:16px;gap:14px 18px;margin-top:30px;max-width:760px}
+.hero-copy .hero-actions,.hero-copy>.button{margin-top:36px}
+.hero-copy .hero-actions .button,.hero-copy>.button{min-height:62px;padding:17px 28px;font-size:17px;border-radius:11px}
+.vehicle-actions .button{min-height:58px;display:inline-flex;justify-content:center;align-items:center;background:var(--red);color:#fff;border:1px solid var(--red);border-radius:11px;padding:16px 20px;font-size:16px;font-weight:700;line-height:1.25;white-space:normal}
+.vehicle-actions .button:hover{background:var(--deep);border-color:var(--deep);color:#fff}
+.vehicle-actions .button:focus-visible{outline:3px solid #d95a5a;outline-offset:3px}
+@media(max-width:1150px){.topbar{padding-left:22px}}
+@media(max-width:900px){.topbar{padding-left:18px}}
+@media(max-width:700px){
+ .hero-copy{width:100%;max-width:none;margin:0;padding:50px 6% 76px}
+ .hero-copy h1{font-size:clamp(46px,10vw,64px);line-height:1.06;margin-bottom:16px}
+ .hero-copy .hero-lead{font-size:18px;line-height:1.5}
+ .hero-copy .hero-points{font-size:14px;margin-top:22px;gap:10px 12px}
+ .hero-copy .hero-actions,.hero-copy>.button{margin-top:24px}
+ .hero-copy .hero-actions .button,.hero-copy>.button{min-height:54px;padding:13px 18px;font-size:15px}
+ .topbar{padding-left:4%}
+ .vehicle-actions .button{min-height:54px}
+}
+
+/* Use one button treatment throughout the vehicle information panel */
+.vehicle-page .detail-info .button{min-height:58px;display:inline-flex;justify-content:center;align-items:center;background:var(--red);color:#fff;border:1px solid var(--red);border-radius:11px;padding:16px 20px;font-size:16px;font-weight:700;line-height:1.25;white-space:normal}
+.vehicle-page .detail-info .button:hover{background:var(--deep);border-color:var(--deep);color:#fff}
+@media(max-width:700px){.vehicle-page .detail-info .button{min-height:54px;padding:13px 16px;font-size:15px}}
+
+/* Rebalance the hero slide: compact text column, visible actions, no image overlap */
+.hero-copy{left:clamp(32px,6vw,108px);top:50%;transform:translateY(-50%);width:min(660px,42vw);padding:0;margin:0}
+.hero-copy h1{font-size:clamp(50px,3.7vw,72px);line-height:1.08;letter-spacing:-1.4px;max-width:640px;margin:0 0 16px}
+.hero-copy .eyebrow{margin-bottom:12px;font-size:13px;letter-spacing:1.3px}
+.hero-copy .hero-lead{max-width:610px;font-size:clamp(18px,1.25vw,22px);line-height:1.45}
+.hero-copy .hero-points{max-width:640px;margin:20px 0 0;gap:10px 14px;font-size:14px;line-height:1.4}
+.hero-copy .hero-actions,.hero-copy>.button{margin-top:24px}
+.hero-copy .hero-actions .button,.hero-copy>.button{min-height:54px;padding:14px 22px;font-size:16px}
+@media(max-width:1150px) and (min-width:701px){
+ .hero-copy{left:5%;width:45vw}
+ .hero-copy h1{font-size:clamp(48px,5vw,60px)}
+ .hero-copy .hero-lead{font-size:18px}
+ .hero-copy .hero-points{font-size:13px;gap:9px 10px}
+}
+@media(max-width:700px){
+ .hero{height:700px;min-height:700px}
+ .hero-copy{left:0;top:24px;transform:none;width:100%;padding:30px 7% 0}
+ .hero-copy h1{font-size:clamp(38px,9vw,48px);line-height:1.08;max-width:100%;margin-bottom:12px}
+ .hero-copy .eyebrow{font-size:11px;margin-bottom:9px}
+ .hero-copy .hero-lead{font-size:16px;line-height:1.45;max-width:100%}
+ .hero-copy .hero-points{display:grid;grid-template-columns:1fr 1fr;max-width:100%;font-size:12px;margin-top:16px;gap:9px}
+ .hero-copy .hero-actions{display:grid;grid-template-columns:1fr;max-width:280px;gap:9px;margin-top:18px}
+ .hero-copy .hero-actions .button,.hero-copy>.button{width:100%;min-height:48px;padding:11px 14px;font-size:14px;margin-top:18px}
+ .hero-image-slot{top:auto;right:7%;bottom:5%;width:86%;height:27%;opacity:.45}
+ .slide-arrow{top:auto;bottom:16%;}
+ .slide-dots{bottom:10px}
+ .slide-counter{bottom:9px}
+}
+
+/* Comfortable select affordance and precise sticky-header anchor offset */
+.form-grid select,.filters select,.catalog-tools select{
+ appearance:none;-webkit-appearance:none;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%236b7280' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+ background-repeat:no-repeat;background-position:right 16px center;background-size:16px 16px;padding-right:44px;cursor:pointer
+}
+#about{scroll-margin-top:34px}
+@media(max-width:700px){.form-grid select,.filters select,.catalog-tools select{background-position:right 13px center;background-size:15px 15px;padding-right:38px}#about{scroll-margin-top:28px}}
+
+/* Catalog cards: uniform photo area, aligned copy and bottom-aligned actions */
+.car-grid,.featured-grid{align-items:stretch}
+.car-grid .car-card,.featured-grid .car-card{display:flex;flex-direction:column;height:100%;min-height:480px}
+.car-grid .car-image,.featured-grid .car-image{height:200px;min-height:200px;flex:0 0 200px;font-size:24px;white-space:nowrap}
+.car-grid .car-image span,.featured-grid .car-image span{white-space:nowrap;font-size:clamp(17px,2vw,24px);line-height:1.2}
+.car-grid .car-content,.featured-grid .car-content{display:flex;flex:1;flex-direction:column;padding:17px}
+.car-grid .car-content h3,.featured-grid .car-content h3{min-height:1.4em;line-height:1.4}
+.car-grid .car-trim,.featured-grid .car-trim{display:-webkit-box;min-height:3em;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-height:1.5}
+.car-grid .car-meta,.featured-grid .car-meta{min-height:1.5em}
+.car-grid .car-content .button,.featured-grid .car-content .button{margin-top:auto;min-height:48px}
+@media(max-width:700px){
+ .car-grid .car-card,.featured-grid .car-card{min-height:410px}
+ .car-grid .car-image,.featured-grid .car-image{height:140px;min-height:140px;flex-basis:140px}
+ .car-grid .car-image span,.featured-grid .car-image span{font-size:16px}
+ .car-grid .car-content,.featured-grid .car-content{padding:12px}
+}
+.car-grid .car-content h3,.featured-grid .car-content h3{display:-webkit-box;min-height:2.8em;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+.car-grid .car-meta,.featured-grid .car-meta{display:-webkit-box;min-height:3em;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+
+/* Catalog card balance: larger photo, concise vehicle details */
+.car-grid .car-card,.featured-grid .car-card{min-height:500px}
+.car-grid .car-image,.featured-grid .car-image{height:245px;min-height:245px;flex-basis:245px}
+.car-grid .car-content,.featured-grid .car-content{padding:15px 17px 16px;gap:0}
+.car-grid .car-content h3,.featured-grid .car-content h3{min-height:0;line-height:1.3;margin:0 0 4px}
+.car-grid .car-trim,.featured-grid .car-trim{min-height:0;line-height:1.4}
+.car-grid .car-meta,.featured-grid .car-meta{min-height:0;margin-top:5px;line-height:1.35}
+.car-grid .car-price,.featured-grid .car-price{margin-top:7px;line-height:1.2}
+.car-grid .rub-price,.featured-grid .rub-price{line-height:1.3;margin:3px 0 9px}
+@media(max-width:700px){
+ .car-grid .car-card,.featured-grid .car-card{min-height:430px}
+ .car-grid .car-image,.featured-grid .car-image{height:170px;min-height:170px;flex-basis:170px}
+ .car-grid .car-content,.featured-grid .car-content{padding:12px}
+}
+
+/* Keep CNY prices aligned even when vehicle descriptions wrap */
+.car-grid .car-price,.featured-grid .car-price{margin-top:auto;padding-top:7px}
+.car-grid .car-content .button,.featured-grid .car-content .button{margin-top:9px}
+
+/* Company timeline with a moving inspection signal */
+.about-facts{position:relative;isolation:isolate}
+.about-facts::before{content:"";position:absolute;z-index:2;left:44px;top:68px;bottom:68px;width:2px;border-radius:2px;background:linear-gradient(to bottom,#f2cccc,#c30c0c 48%,#f2cccc);opacity:.8}
+.about-facts::after{content:"";position:absolute;z-index:4;left:39px;top:62px;width:12px;height:12px;border-radius:50%;background:#c30c0c;box-shadow:0 0 0 5px #c30c0c1c,0 0 16px #c30c0c99;animation:aboutPulseTravel 5.4s cubic-bezier(.45,0,.55,1) infinite}
+.about-facts article{position:relative;z-index:1;min-height:140px}
+.about-facts article>b{position:relative;z-index:5;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:#fff3f3;border:2px solid #fff;box-shadow:0 0 0 1px #f0d0d0;font-size:18px;line-height:1}
+@keyframes aboutPulseTravel{0%{top:62px;opacity:.35;transform:scale(.8)}12%{opacity:1;transform:scale(1.15)}82%{opacity:1;transform:scale(1)}100%{top:calc(100% - 74px);opacity:.3;transform:scale(.8)}}
+.step-icon svg{display:block;width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:700px){.about-facts::before{left:34px;top:55px;bottom:55px}.about-facts::after{left:29px;top:49px;animation-name:aboutPulseTravelMobile}.about-facts article{min-height:0}.about-facts article>b{width:36px;height:36px;font-size:16px}}
+@keyframes aboutPulseTravelMobile{0%{top:49px;opacity:.35;transform:scale(.8)}12%{opacity:1;transform:scale(1.15)}82%{opacity:1;transform:scale(1)}100%{top:calc(100% - 61px);opacity:.3;transform:scale(.8)}}
+@media(prefers-reduced-motion:reduce){.about-facts::after{animation:none;top:50%;opacity:.8}}
+
+/* Align the signal precisely with each numbered badge */
+.about-facts::before{left:44px;top:43px;bottom:97px}
+.about-facts::after{left:39px;top:37px}
+@keyframes aboutPulseTravel{0%{top:37px;opacity:.35;transform:scale(.8)}12%{opacity:1;transform:scale(1.15)}82%{opacity:1;transform:scale(1)}100%{top:calc(100% - 103px);opacity:.3;transform:scale(.8)}}
+.step-icon{width:48px;height:48px;border-radius:14px;border:1px solid #f4dede;background:#fff3f3}
+.step-icon svg{width:27px;height:27px}
+@media(max-width:700px){
+ .about-facts::before{left:34px;top:34px;bottom:134px}
+ .about-facts::after{left:29px;top:28px}
+ .about-facts article{min-height:168px}
+ .about-facts article>b{width:36px;height:36px}
+ @keyframes aboutPulseTravelMobile{0%{top:28px;opacity:.35;transform:scale(.8)}12%{opacity:1;transform:scale(1.15)}82%{opacity:1;transform:scale(1)}100%{top:calc(100% - 140px);opacity:.3;transform:scale(.8)}}
+ .step-icon{width:42px;height:42px;border-radius:13px}
+ .step-icon svg{width:24px;height:24px}
+}
+
+/* Replace the intrusive connector with a sequential card and badge pulse */
+.about-facts::before,.about-facts::after{content:none;display:none}
+.about-facts article{animation:companyStepGlow 5.4s ease-in-out infinite}
+.about-facts article:nth-child(2){animation-delay:1.8s}
+.about-facts article:nth-child(3){animation-delay:3.6s}
+.about-facts article>b{animation:companyBadgePulse 5.4s ease-in-out infinite}
+.about-facts article:nth-child(2)>b{animation-delay:1.8s}
+.about-facts article:nth-child(3)>b{animation-delay:3.6s}
+@keyframes companyStepGlow{0%,18%{background:#fff8f8;border-color:#e5b7b7;box-shadow:0 7px 22px #af05051a}25%,100%{background:#fff;border-color:var(--line);box-shadow:none}}
+@keyframes companyBadgePulse{0%,18%{transform:scale(1.07);background:#ffe8e8;box-shadow:0 0 0 5px #af050510}25%,100%{transform:scale(1);background:#fff3f3;box-shadow:0 0 0 1px #f0d0d0}}
+.step-icon{width:52px;height:52px;display:grid;place-items:center;border:0;border-radius:15px;background:linear-gradient(145deg,#c70c0c,#970404);color:#fff;box-shadow:0 7px 16px #af050522}
+.step-icon svg{width:31px;height:31px;fill:#fff;stroke:none}
+.step-icon .icon-cutout{fill:none;stroke:#a80505;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.step-icon .icon-cutout-fill{fill:#970404;stroke:none}
+.step-icon .icon-accent{fill:#970404;stroke:none}
+.step-icon .icon-accent-line{fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:700px){.step-icon{width:46px;height:46px;border-radius:14px}.step-icon svg{width:28px;height:28px}}
+@media(prefers-reduced-motion:reduce){.about-facts article,.about-facts article>b{animation:none}}
+
+/* Soft, unhurried sequence for the company steps */
+.about-facts article,.about-facts article>b{animation-duration:9s;animation-timing-function:ease-in-out}
+.about-facts article:nth-child(2),.about-facts article:nth-child(2)>b{animation-delay:3s}
+.about-facts article:nth-child(3),.about-facts article:nth-child(3)>b{animation-delay:6s}
+@keyframes companyStepGlow{0%,7%,31%,100%{background:#fff;border-color:var(--line);box-shadow:none}13%,24%{background:#fffafa;border-color:#eedada;box-shadow:0 4px 14px #af05050a}}
+@keyframes companyBadgePulse{0%,7%,31%,100%{transform:scale(1);background:#fff3f3;box-shadow:0 0 0 1px #f0d0d0}13%,24%{transform:scale(1.025);background:#ffeded;box-shadow:0 0 0 3px #af050508}}
+
+/* Keep all three hero slides on one shared type scale and button baseline */
+.hero-copy{left:clamp(32px,6vw,108px);top:50%;transform:translateY(-50%);width:min(720px,46vw);height:430px;padding:0;margin:0}
+.hero-copy h1{font-size:clamp(46px,3.05vw,60px);line-height:1.08;letter-spacing:-1.2px;max-width:680px;margin:0 0 16px}
+.hero-copy .eyebrow{font-size:13px;line-height:1.35;margin:0 0 12px}
+.hero-copy .hero-lead{font-size:clamp(18px,1.1vw,21px);line-height:1.48;max-width:620px}
+.hero-copy .hero-points{font-size:14px;line-height:1.4;gap:10px 14px;max-width:660px;margin:20px 0 0}
+.hero-copy .hero-actions,.hero-copy>.button{position:absolute;left:0;bottom:0;margin:0}
+.hero-copy .hero-actions .button,.hero-copy>.button{min-height:54px;padding:14px 22px;font-size:16px}
+@media(max-width:1150px) and (min-width:701px){
+ .hero-copy{left:5%;width:48vw;height:410px}
+ .hero-copy h1{font-size:clamp(44px,4.6vw,56px)}
+ .hero-copy .hero-lead{font-size:18px}
+ .hero-copy .hero-points{font-size:13px;gap:8px 10px}
+}
+@media(max-width:700px){
+ .hero{height:700px;min-height:700px}
+ .hero-copy{left:0;top:24px;transform:none;width:100%;height:auto;padding:30px 7% 0}
+ .hero-copy h1{font-size:clamp(38px,9vw,48px);line-height:1.08;max-width:100%;margin-bottom:12px}
+ .hero-copy .eyebrow{font-size:11px;margin-bottom:9px}
+ .hero-copy .hero-lead{font-size:16px;line-height:1.45;max-width:100%}
+ .hero-copy .hero-points{display:grid;grid-template-columns:1fr 1fr;max-width:100%;font-size:12px;margin-top:16px;gap:9px}
+ .hero-copy .hero-actions{position:static;display:grid;grid-template-columns:1fr;max-width:280px;gap:9px;margin-top:18px}
+ .hero-copy>.button{position:static;width:auto;min-height:48px;padding:11px 14px;font-size:14px;margin-top:18px}
+ .hero-copy .hero-actions .button{width:100%;min-height:48px;padding:11px 14px;font-size:14px}
+}
+
+/* Make the current company step unmistakable while keeping the motion smooth */
+@keyframes companyBadgePulse{
+ 0%,7%,31%,100%{transform:scale(1);background:#fff3f3;color:var(--red);border-color:#fff;box-shadow:0 0 0 1px #f0d0d0}
+ 13%,24%{transform:scale(1.08);background:var(--red);color:#fff;border-color:#fff;box-shadow:0 0 0 6px #af05052b,0 5px 18px #af05055c}
+}
+
+/* Gentle pink highlight for the sequential company badges */
+@keyframes companyBadgePulse{
+ 0%,7%,31%,100%{transform:scale(1);background:#fff3f3;color:var(--red);border-color:#fff;box-shadow:0 0 0 1px #f0d0d0}
+ 13%,24%{transform:scale(1.04);background:#ffe7eb;color:var(--red);border-color:#fff;box-shadow:0 0 0 4px #f2c5ce55,0 3px 10px #af050512}
+}
+
+/* Lift the call-to-action baseline on every desktop hero slide */
+.hero-copy .hero-actions,.hero-copy>.button{bottom:48px}
+@media(max-width:700px){.hero-copy .hero-actions,.hero-copy>.button{margin-top:12px}}
+
+/* Clean vehicle feature lists without bullet dots */
+.car-detail-sections .clean-feature-list{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:6px}
+.car-detail-sections .clean-feature-list li{padding:5px 0;border-bottom:1px solid #eef0f2;line-height:1.5}
+.car-detail-sections .clean-feature-list li:last-child{border-bottom:0}
+.disclaimer .rate-disclaimer{color:var(--red)}
+.vehicle-page .detail-info .disclaimer{color:var(--red)!important}

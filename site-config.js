@@ -2,7 +2,7 @@ window.XUNAN_CONFIG={leadEmail:"xunan2026@mail.ru"};
 window.XUNAN_RATE={value:12.61,date:"",fallback:true};
 function paintCnyRate(){
   const value=window.XUNAN_RATE;
-  document.querySelectorAll('#cnyRate').forEach(el=>el.textContent=value.value.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:4})+' ₽/¥'+(value.fallback?'*':''));
+  document.querySelectorAll('#cnyRate').forEach(el=>el.textContent=value.value.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:4}));
   document.querySelectorAll('#cnyRateDate').forEach(el=>el.textContent=value.date?'ЦБ РФ · '+value.date:value.fallback?'резервный курс из таблицы':'');
 }
 async function updateCnyRate(){

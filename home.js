@@ -4,9 +4,9 @@ function showSlide(i){current=(i+slides.length)%slides.length;slides.forEach((s,
 document.querySelector('.slide-arrow.prev').onclick=()=>showSlide(current-1);
 document.querySelector('.slide-arrow.next').onclick=()=>showSlide(current+1);
 dots.forEach((d,n)=>d.onclick=()=>showSlide(n));
-let timer=setInterval(()=>showSlide(current+1),2000);
+let timer=setInterval(()=>showSlide(current+1),6000);
 document.querySelector('.hero').addEventListener('mouseenter',()=>clearInterval(timer));
-document.querySelector('.hero').addEventListener('mouseleave',()=>{clearInterval(timer);timer=setInterval(()=>showSlide(current+1),2000)});
+document.querySelector('.hero').addEventListener('mouseleave',()=>{clearInterval(timer);timer=setInterval(()=>showSlide(current+1),6000)});
 const fmt=n=>new Intl.NumberFormat('ru-RU').format(n),featured=document.querySelector('#featuredCars');
 function renderFeatured(rate){
   const cars=window.XUNAN_CARS||[];
