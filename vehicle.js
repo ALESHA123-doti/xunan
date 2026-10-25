@@ -34,9 +34,42 @@ $('#carPrice').textContent=`${fmt(car.priceCNY)} ¥`;$('#calcLink').href=`calcul
 const specs=[['Номер кузова',car.bodyNumber||'Уточняется'],['Дата выпуска',car.release],['Двигатель',d.engine],['Коробка передач',d.transmission],['Привод','Передний'],['Цвет',car.color],['Пробег',`${fmt(car.mileage)} км`],['Состояние',car.condition||'Уточняется']];$('#carSpecs').innerHTML=specs.map(([k,v])=>`<div>${k}<b>${v}</b></div>`).join('');
 const panel=$('#detailPanel');function showTab(tab){const title={equipment:'Комплектация',safety:'Безопасность',condition:'Состояние',description:'Описание'}[tab];panel.innerHTML=`<h3>${title}</h3>`;if(tab==='equipment'||tab==='safety'){const entries=(d[tab]||[]).flatMap(item=>String(item).split(/[;；]\s*/)).map(item=>item.trim().replace(/[.!?…]+$/,'')).filter(Boolean);panel.insertAdjacentHTML('beforeend',`<ul class="clean-feature-list">${entries.map(item=>{const text=item.charAt(0).toLocaleUpperCase('ru-RU')+item.slice(1);return `<li>${text}</li>`}).join('')}</ul>`) }else panel.insertAdjacentHTML('beforeend',`<p>${d[tab]||''}</p>`)}
 document.querySelectorAll('#detailTabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#detailTabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');showTab(b.dataset.tab)});showTab('description');
-let photo=1;const stage=$('#galleryStage'),main=$('#mainPhoto'),placeholder=$('#photoPlaceholder'),counter=$('#photoCounter'),lightbox=$('#lightbox'),big=$('#lightboxPhoto'),bigPlaceholder=$('#lightboxPlaceholder');const photoPath=n=>`assets/cars/${car.id}/${String(n).padStart(2,'0')}.jpg`;
-function setPhoto(n){photo=((n%22)+22)%22+1;counter.textContent=`${photo} / 22`;document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>b.classList.toggle('active',i+1===photo));main.onload=()=>{main.style.display='block';placeholder.style.display='none'};main.onerror=()=>{main.style.display='none';placeholder.style.display='grid'};main.src=photoPath(photo);if(lightbox.classList.contains('open')){big.onload=()=>{big.style.display='block';bigPlaceholder.style.display='none'};big.onerror=()=>{big.style.display='none';bigPlaceholder.style.display='block'};big.src=photoPath(photo);bigPlaceholder.textContent=`Фото ${photo} из 22 будет добавлено`}}
-$('#galleryThumbs').innerHTML=Array.from({length:22},(_,i)=>`<button type="button" aria-label="Фото ${i+1}" title="Фото ${i+1}">${String(i+1).padStart(2,'0')}</button>`).join('');document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>b.onclick=()=>setPhoto(i+1));$('#photoPrev').onclick=()=>setPhoto(photo-2);$('#photoNext').onclick=()=>setPhoto(photo);stage.onclick=e=>{if(!e.target.closest('button')){lightbox.classList.add('open');setPhoto(photo-1)}};$('#lightboxClose').onclick=()=>lightbox.classList.remove('open');$('#lightboxPrev').onclick=()=>setPhoto(photo-2);$('#lightboxNext').onclick=()=>setPhoto(photo);lightbox.onclick=e=>{if(e.target===lightbox)lightbox.classList.remove('open')};setPhoto(0);
+let photo=0;
+const stage=$('#galleryStage'),main=$('#mainPhoto'),placeholder=$('#photoPlaceholder'),counter=$('#photoCounter'),lightbox=$('#lightbox'),big=$('#lightboxPhoto'),bigPlaceholder=$('#lightboxPlaceholder');
+const photoPath=n=>`assets/cars/${car.id}/${String(n).padStart(2,'0')}.jpg`;
+let photos=[];
+function updatePhoto(){
+  const count=photos.length;
+  if(!count){main.style.display='none';placeholder.style.display='grid';placeholder.textContent='Фотографии скоро появятся';counter.textContent='0 / 0';$('#galleryThumbs').innerHTML='';$('#photoPrev').hidden=true;$('#photoNext').hidden=true;return}
+  photo=(photo+count)%count;
+  const path=photoPath(photos[photo]);
+  counter.textContent=`${photo+1} / ${count}`;
+  document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>b.classList.toggle('active',i===photo));
+  main.onload=()=>{main.style.display='block';placeholder.style.display='none'};
+  main.onerror=()=>{main.style.display='none';placeholder.style.display='grid'};
+  main.src=path;
+  if(lightbox.classList.contains('open')){
+    big.onload=()=>{big.style.display='block';bigPlaceholder.style.display='none'};
+    big.onerror=()=>{big.style.display='none';bigPlaceholder.style.display='block'};
+    big.src=path;bigPlaceholder.textContent='Фотография недоступна';
+  }
+}
+function goPhoto(index){if(!photos.length)return;photo=(index+photos.length)%photos.length;updatePhoto()}
+async function loadPhotos(){
+  const checks=Array.from({length:22},(_,i)=>i+1).map(n=>new Promise(resolve=>{
+    const img=new Image();img.onload=()=>resolve(n);img.onerror=()=>resolve(null);img.src=photoPath(n);
+  }));
+  photos=(await Promise.all(checks)).filter(Boolean);
+  $('#galleryThumbs').innerHTML=photos.map((n,i)=>`<button type="button" aria-label="Фото ${i+1}" title="Фото ${i+1}"><img src="${photoPath(n)}" alt="Миниатюра ${i+1}"></button>`).join('');
+  document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>b.onclick=()=>goPhoto(i));
+  $('#photoPrev').onclick=()=>goPhoto(photo-1);$('#photoNext').onclick=()=>goPhoto(photo+1);
+  stage.onclick=e=>{if(!e.target.closest('button')&&photos.length){lightbox.classList.add('open');updatePhoto()}};
+  $('#lightboxClose').onclick=()=>lightbox.classList.remove('open');
+  $('#lightboxPrev').onclick=()=>goPhoto(photo-1);$('#lightboxNext').onclick=()=>goPhoto(photo+1);
+  lightbox.onclick=e=>{if(e.target===lightbox)lightbox.classList.remove('open')};
+  updatePhoto();
+}
+loadPhotos();
 window.XUNAN_RATE_READY.then(rate=>$('#carRub').textContent=`≈ ${fmt(Math.round(car.priceCNY*rate.value))} ₽ по курсу ЦБ*`);
 
 window.addEventListener("xunan-rate-updated",event=>{const id=new URLSearchParams(location.search).get("id");const car=window.XUNAN_CARS[Number(id)];if(car)document.querySelector("#carRub").textContent="≈ "+fmt(Math.round(car.priceCNY*event.detail.value))+" ₽ по курсу ЦБ"});

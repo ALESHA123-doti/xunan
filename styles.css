@@ -474,7 +474,7 @@ body{font-size:18px;line-height:1.6}
 @keyframes companyBadgePulse{0%,7%,31%,100%{transform:scale(1);background:#fff3f3;box-shadow:0 0 0 1px #f0d0d0}13%,24%{transform:scale(1.025);background:#ffeded;box-shadow:0 0 0 3px #af050508}}
 
 /* Keep all three hero slides on one shared type scale and button baseline */
-.hero-copy{left:clamp(32px,6vw,108px);top:50%;transform:translateY(-50%);width:min(720px,46vw);height:430px;padding:0;margin:0}
+.hero-copy{left:clamp(32px,8vw,140px);top:50%;transform:translateY(-50%);width:min(720px,46vw);height:430px;padding:0;margin:0}
 .hero-copy h1{font-size:clamp(46px,3.05vw,60px);line-height:1.08;letter-spacing:-1.2px;max-width:680px;margin:0 0 16px}
 .hero-copy .eyebrow{font-size:13px;line-height:1.35;margin:0 0 12px}
 .hero-copy .hero-lead{font-size:clamp(18px,1.1vw,21px);line-height:1.48;max-width:620px}
@@ -521,3 +521,503 @@ body{font-size:18px;line-height:1.6}
 .car-detail-sections .clean-feature-list li:last-child{border-bottom:0}
 .disclaimer .rate-disclaimer{color:var(--red)}
 .vehicle-page .detail-info .disclaimer{color:var(--red)!important}
+
+
+/* Repair vehicle detail layout and constrain gallery images */
+.vehicle-page .detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  align-items: start;
+  gap: 30px;
+}
+.vehicle-page .detail-grid > * { min-width: 0; }
+.vehicle-page .gallery-main {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: clamp(280px, 38vw, 520px);
+  overflow: hidden;
+  padding: 0;
+  border-radius: 8px;
+  background: #e7e8e9;
+}
+.vehicle-page .gallery-main #mainPhoto {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  margin: auto;
+  object-fit: contain !important;
+}
+.vehicle-page .gallery-main .placeholder-icon {
+  position: relative;
+  z-index: 1;
+}
+.vehicle-page .gallery-thumbs {
+  grid-template-columns: repeat(auto-fill, minmax(54px, 1fr));
+  max-width: 100%;
+}
+.vehicle-page .tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(12px, 2vw, 28px);
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+}
+.vehicle-page .car-detail-sections {
+  height: auto !important;
+  max-height: none;
+  overflow: visible !important;
+  padding: 22px 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+}
+.vehicle-page .car-detail-sections .clean-feature-list {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.vehicle-page .car-detail-sections .clean-feature-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 850px) {
+  .vehicle-page .detail-grid { grid-template-columns: minmax(0, 1fr); }
+  .vehicle-page .gallery-main { height: clamp(240px, 65vw, 420px); }
+}
+
+/* Final fix: keep the vehicle gallery in its own clipped area and thumbnails in one row */
+.vehicle-page .detail-grid > div:first-child {
+  min-width: 0;
+  overflow: hidden;
+}
+.vehicle-page #galleryStage {
+  position: relative !important;
+  display: flex !important;
+  width: 100% !important;
+  height: clamp(280px, 38vw, 520px) !important;
+  max-height: 520px !important;
+  overflow: hidden !important;
+  isolation: isolate;
+}
+.vehicle-page #galleryStage > #mainPhoto {
+  display: none;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  z-index: 1;
+}
+.vehicle-page #galleryStage > .gallery-arrow,
+.vehicle-page #galleryStage > .gallery-counter {
+  z-index: 2;
+}
+.vehicle-page #galleryThumbs {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(54px, 1fr)) !important;
+  align-items: stretch;
+  gap: 6px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  overflow: hidden !important;
+  margin: 8px 0 18px !important;
+  padding: 0 !important;
+}
+.vehicle-page #galleryThumbs > button {
+  position: relative !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 48px !important;
+  max-height: 48px !important;
+  overflow: hidden !important;
+  background: #f1f2f3 !important;
+  background-image: none !important;
+  border: 1px solid #dfe1e4;
+  border-radius: 4px;
+  color: #68707a;
+  font-size: 12px;
+}
+.vehicle-page #detailTabs,
+.vehicle-page #detailPanel {
+  position: relative;
+  clear: both;
+  width: 100%;
+  max-width: 100%;
+}
+.vehicle-page .car-detail-sections {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+@media (max-width: 700px) {
+  .vehicle-page #galleryThumbs { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; }
+  .vehicle-page #galleryThumbs > button { height: 42px !important; max-height: 42px !important; }
+}
+
+/* Исправление карточек автомобилей в каталоге */
+.car-grid,
+.featured-grid {
+  align-items: stretch;
+  min-width: 0;
+}
+
+.car-grid .car-card,
+.featured-grid .car-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.car-grid .car-image,
+.featured-grid .car-image {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 220px;
+  min-height: 220px;
+  overflow: hidden;
+  background: #e5e7e9;
+}
+
+.car-grid .car-image img,
+.featured-grid .car-image img,
+.car-image > img {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.car-grid .car-image > span,
+.featured-grid .car-image > span {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.car-grid .car-image:has(img) > span,
+.featured-grid .car-image:has(img) > span {
+  display: none;
+}
+
+.car-grid .car-content,
+.featured-grid .car-content {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.car-grid .car-content h3,
+.featured-grid .car-content h3 {
+  overflow-wrap: anywhere;
+}
+
+/* Галерея на странице автомобиля */
+.vehicle-page .detail-grid > div:first-child {
+  min-width: 0;
+}
+
+.vehicle-page .gallery-main {
+  position: relative;
+  width: 100%;
+  height: clamp(300px, 38vw, 520px);
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #e5e7e9;
+}
+
+.vehicle-page .gallery-main #mainPhoto {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Стрелки ближе к краям основной фотографии */
+.vehicle-page .gallery-main .gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: #20252a80;
+  color: #fff;
+  z-index: 3;
+}
+
+.vehicle-page .gallery-main #photoPrev {
+  left: 14px;
+}
+
+.vehicle-page .gallery-main #photoNext {
+  right: 14px;
+}
+
+.vehicle-page .gallery-counter {
+  z-index: 3;
+}
+
+/* Миниатюры фотографий */
+.vehicle-page .gallery-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(58px, 1fr));
+  gap: 7px;
+  width: 100%;
+  min-width: 0;
+  overflow: visible;
+}
+
+.vehicle-page .gallery-thumbs button {
+  width: 100%;
+  height: 52px;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 5px;
+  background: #e8eaec;
+  color: #505761;
+  font-size: 11px;
+}
+
+.vehicle-page .tabs,
+.vehicle-page #detailPanel {
+  min-width: 0;
+}
+
+/* Адаптация под разные размеры экрана */
+@media (max-width: 900px) {
+  .car-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vehicle-page .detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .car-grid,
+  .featured-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .car-grid .car-image,
+  .featured-grid .car-image {
+    height: 210px;
+    min-height: 210px;
+  }
+
+  .vehicle-page .gallery-main {
+    height: 300px;
+  }
+
+  .vehicle-page .gallery-thumbs {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .vehicle-page .gallery-thumbs button {
+    height: 44px;
+  }
+}
+
+/* Миниатюры: показывать фотографии целиком */
+.vehicle-page .gallery-thumbs button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px;
+  overflow: hidden;
+  background: #f0f1f2;
+}
+
+.vehicle-page .gallery-thumbs button img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+
+/* Главный слайдер: интеграция фотографии */
+.hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #1a1010;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #1a1010;
+}
+
+.hero-slide.active {
+  display: block;
+}
+
+/* Контейнер изображения */
+.hero-image-slot {
+  position: absolute;
+  right: 4%;
+  top: 6%;
+  width: 54%;
+  height: 86%;
+  overflow: hidden;
+  border: none;
+  border-radius: 16px;
+  background: #211516;
+  isolation: isolate;
+}
+
+/* Фотография */
+.hero-image-slot img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+}
+
+/* Мягкое затемнение слева для плавного перехода к тексту */
+.hero-image-slot.has-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(26, 16, 16, 0.65) 0%,
+    rgba(26, 16, 16, 0.18) 28%,
+    rgba(26, 16, 16, 0) 60%
+  );
+}
+
+
+
+/* Изображение только для первого слайда */
+.hero-image-slot--cars {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 34%;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  overflow: hidden;
+  opacity: 1;
+  background: transparent;
+  pointer-events: none;
+
+  /* Плавно растворяем края изображения */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.35) 8%,
+    #000 25%,
+    #000 84%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.35) 8%,
+    #000 25%,
+    #000 84%,
+    transparent 100%
+  );
+}
+
+.hero-image-slot--cars img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Убираем заглушку только в блоке с фотографией */
+.hero-image-slot--cars span {
+  display: none;
+}
+
+/* Сохраняем текст и управление поверх изображения */
+.hero-slide .hero-copy {
+  z-index: 2;
+}
+
+.hero-slide .hero-image-slot--cars {
+  z-index: 0;
+}
+
+.hero .slide-arrow,
+.hero .slide-dots,
+.hero .slide-counter {
+  z-index: 3;
+}
+
+/* На мобильных не накладываем фотографию на текст */
+@media (max-width: 700px) {
+  .hero-image-slot--cars {
+    left: 0;
+    top: 53%;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: auto;
+    opacity: 0.55;
+
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 24%,
+      #000 82%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 24%,
+      #000 82%,
+      transparent 100%
+    );
+  }
+}

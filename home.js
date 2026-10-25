@@ -7,12 +7,24 @@ dots.forEach((d,n)=>d.onclick=()=>showSlide(n));
 let timer=setInterval(()=>showSlide(current+1),6000);
 document.querySelector('.hero').addEventListener('mouseenter',()=>clearInterval(timer));
 document.querySelector('.hero').addEventListener('mouseleave',()=>{clearInterval(timer);timer=setInterval(()=>showSlide(current+1),6000)});
+document.querySelectorAll('.hero-slide').forEach((slide,index)=>{
+  const slot=slide.querySelector('.hero-image-slot');
+  if(!slot)return;
+  const img=document.createElement('img');
+  img.src=`assets/hero/${String(index+1).padStart(2,'0')}.jpg`;
+  img.alt='Автомобиль XUNAN';img.className='hero-photo-img';
+  img.onerror=()=>img.remove();slot.prepend(img);
+});
 const fmt=n=>new Intl.NumberFormat('ru-RU').format(n),featured=document.querySelector('#featuredCars');
+function addPhotoFallbacks(){document.querySelectorAll('.car-image img').forEach(img=>img.onerror=()=>{img.remove();const link=img.parentElement;link.classList.add('no-photo');link.textContent='Фото скоро появится'});}
 function renderFeatured(rate){
   const cars=window.XUNAN_CARS||[];
   if(!featured)return;
-  featured.innerHTML=cars.slice(0,3).map(c=>'<article class="car-card"><div class="car-image"><span>Место для фото</span></div><div class="car-content"><h3>'+c.title+'</h3><div class="car-trim">'+c.trim+'</div><div class="car-meta">'+c.color+'　·　'+fmt(c.mileage)+' км　·　'+c.engine+'</div><strong class="car-price">'+fmt(c.priceCNY)+' ¥</strong><small class="rub-price">≈ '+fmt(Math.round(c.priceCNY*rate.value))+' ₽ по курсу ЦБ</small><a class="button button-outline" href="vehicle.html?id='+c.id+'">Подробнее</a></div></article>').join('');
+  featured.innerHTML=cars.slice(0,3).map(c=>'<article class="car-card"><div class="car-image"><a class="car-image-link" href="vehicle.html?id='+c.id+'" aria-label="Открыть '+c.title+'"><img src="assets/cars/'+c.id+'/01.jpg" alt="'+c.title+'" loading="lazy"></a></div><div class="car-content"><h3>'+c.title+'</h3><div class="car-trim">'+c.trim+'</div><div class="car-meta">'+c.color+'　·　'+fmt(c.mileage)+' км　·　'+c.engine+'</div><strong class="car-price">'+fmt(c.priceCNY)+' ¥</strong><small class="rub-price">≈ '+fmt(Math.round(c.priceCNY*rate.value))+' ₽ по курсу ЦБ</small><a class="button button-outline" href="vehicle.html?id='+c.id+'">Подробнее</a></div></article>').join('');
+  addPhotoFallbacks();
 }
+featured?.addEventListener('error',()=>{},true);
+function addPhotoFallbacks(){document.querySelectorAll('.car-image img').forEach(img=>img.onerror=()=>{img.remove();const link=img.parentElement;link.classList.add('no-photo');link.textContent='Фото скоро появится'});}
 window.XUNAN_RATE_READY.then(renderFeatured);
 window.addEventListener('xunan-rate-updated',event=>renderFeatured(event.detail));
 const menu=document.querySelector('.menu-toggle');
