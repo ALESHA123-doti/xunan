@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#AF0505"><title>Машина на заказ — XUNAN</title>
+<link rel="icon" href="assets/favicon.ico"><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+<a class="brand" href="index.html" aria-label="XUNAN — главная"><img class="brand-logo" src="assets/logo.png" alt="XUNAN Automobile Trade"></a>
+<button class="menu-toggle" aria-label="Открыть меню">☰</button>
+<nav><a href="index.html">Главная</a><a href="catalog.html">Каталог</a><a href="order.html">Машина на заказ</a><a href="calculator.html">Расчёт</a><a href="index.html#process">Как купить</a><a href="index.html#about">О компании</a><a href="index.html#contacts">Контакты</a></nav>
+<a class="button button-light" href="#orderForm">Заполнить анкету</a>
+</header>
+<div class="currency-bar">Юань ЦБ РФ (CNY/RUB): <b id="cnyRate">загрузка…</b> <span id="cnyRateDate"></span></div>
+<main class="order-page section-wrap">
+<div class="crumb"><a href="index.html">Главная</a>　/　Машина на заказ</div>
+<section class="order-intro">
+<p class="eyebrow red">ПОДБОР АВТОМОБИЛЯ</p>
+<h1>Расскажите, что ищете</h1>
+<p>Можно заполнить только часть анкеты — марка, цвет, бюджет и остальные пожелания необязательны. Если пока не определились, просто оставьте удобный способ связи.</p>
+</section>
+<form id="orderForm" class="order-form">
+<section class="form-section">
+<div class="form-section-heading"><span>01</span><div><h2>Как с вами связаться</h2><p>Выберите канал и укажите номер, адрес или имя в этом канале.</p></div></div>
+<div class="form-grid">
+<label>Канал связи <em>обязательно</em>
+<select id="contactMethod" name="contactMethod" required>
+<option value="">Выберите канал</option><option value="Телефон">Телефон</option><option value="Telegram">Telegram</option><option value="WhatsApp">WhatsApp</option><option value="MAX">MAX</option><option value="Электронная почта">Электронная почта</option><option value="Другое">Другое</option>
+</select></label>
+<label id="contactValueLabel">Ваш контакт <em>обязательно</em>
+<input id="contactValue" name="contactValue" required placeholder="Сначала выберите канал связи">
+</label>
+<label>Как к вам обращаться <small>необязательно</small><input name="name" placeholder="Имя"></label>
+</div>
+</section>
+<section class="form-section">
+<div class="form-section-heading"><span>02</span><div><h2>Пожелания к автомобилю</h2><p>Укажите то, что уже знаете. Любое поле можно оставить пустым.</p></div></div>
+<div class="form-grid">
+<label>Марка<select name="make"><option value="">Любая марка</option><option>Audi</option><option>BMW</option><option>Honda</option><option>Kia</option><option>Mazda</option><option>Toyota</option><option>Volkswagen</option><option>Другая</option></select></label>
+<label>Модель<input name="model" placeholder="Например, Audi Q3"></label>
+<label>Цвет<input name="color" placeholder="Любой"></label>
+<label>Тип кузова<select name="body"><option value="">Любой</option><option>Седан</option><option>Кроссовер / SUV</option><option>Хэтчбек</option><option>Универсал</option><option>Минивэн</option><option>Другой</option></select></label>
+<label>Год выпуска от<input name="yearFrom" type="number" min="1990" max="2035" placeholder="Например, 2021"></label>
+<label>Год выпуска до<input name="yearTo" type="number" min="1990" max="2035" placeholder="Например, 2024"></label>
+<label>Бюджет от, ¥<input name="budgetFrom" type="number" min="0" step="1000" placeholder="Необязательно"></label>
+<label>Бюджет до, ¥<input name="budgetTo" type="number" min="0" step="1000" placeholder="Необязательно"></label>
+<label>Тип двигателя<select name="engineType"><option value="">Любой</option><option>Бензин</option><option>Гибрид</option><option>Электро</option><option>Дизель</option></select></label>
+<label>Привод<select name="drive"><option value="">Любой</option><option>Передний</option><option>Задний</option><option>Полный</option></select></label>
+<label>Коробка передач<select name="transmission"><option value="">Любая</option><option>Автомат</option><option>Робот</option><option>Вариатор</option><option>Механика</option></select></label>
+<label>Максимальный пробег, км<input name="mileageMax" type="number" min="0" step="1000" placeholder="Например, 50 000"></label>
+</div>
+<label class="wide-field">Что ещё важно учесть?<small>необязательно</small><textarea name="comment" rows="4" placeholder="Комплектация, желаемые опции, сроки или другие пожелания"></textarea></label>
+</section>
+<div class="order-submit">
+<button class="button" type="submit">Отправить заявку　→</button>
+<p>Параметры автомобиля можно не указывать. Для заявки обязательны только канал связи и контакт для ответа.</p>
+<div id="orderStatus" role="status" aria-live="polite"></div>
+</div>
+</form>
+</main>
+<footer id="contacts"><div class="footer-main"><a class="brand" href="index.html"><img class="brand-logo" src="assets/logo.png" alt="XUNAN Automobile Trade"></a><div class="footer-contact"><b>Контакты</b><span>Телефон: <a href="tel:+79538740033">+7 953 874-00-33</a></span><span><a href="https://t.me/xunanautotrade" target="_blank" rel="noreferrer">Telegram</a> · <a href="https://max.ru/join/DEZvsnxLBWOvJJHh7o0DL7q_ZMvHXa1GD6vDbuG4IHg" target="_blank" rel="noreferrer">MAX</a></span><span>Офис: Новосибирск, пр. Карла Маркса, 30</span></div><div class="footer-nav"><b>Разделы сайта</b><a href="index.html">Главная</a><a href="catalog.html">Каталог автомобилей</a><a href="order.html">Машина на заказ</a><a href="calculator.html">Расчёт стоимости</a><a href="index.html#process">Как купить</a><a href="index.html#about">О компании</a><a href="index.html#contacts">Контакты</a></div></div></footer>
+<script src="site-config.js"></script><script src="order.js"></script>
+</body>
+</html>

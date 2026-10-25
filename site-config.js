@@ -1,3 +1,23 @@
-window.XUNAN_CONFIG={leadEmail:""};
+window.XUNAN_CONFIG={leadEmail:"xunan2026@mail.ru"};
 window.XUNAN_RATE={value:12.61,date:"",fallback:true};
-window.XUNAN_RATE_READY=(async()=>{try{const r=await fetch('/api/currency/CNY',{cache:'no-store'});if(!r.ok)throw new Error('rate service unavailable');const d=await r.json();if(d.rate>0)window.XUNAN_RATE={value:d.rate,date:d.date||'',fallback:false}}catch(e){}const value=window.XUNAN_RATE;const els=document.querySelectorAll('#cnyRate');els.forEach(e=>e.textContent=`${value.value.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:4})} ₽/¥${value.fallback?'*':''}`);document.querySelectorAll('#cnyRateDate').forEach(e=>e.textContent=value.date?`ЦБ РФ · ${value.date}`:value.fallback?'курс из таблицы расчёта; дата не указана':'');return value})();
+function paintCnyRate(){
+  const value=window.XUNAN_RATE;
+  document.querySelectorAll('#cnyRate').forEach(el=>el.textContent=value.value.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:4})+' ₽/¥'+(value.fallback?'*':''));
+  document.querySelectorAll('#cnyRateDate').forEach(el=>el.textContent=value.date?'ЦБ РФ · '+value.date:value.fallback?'резервный курс из таблицы':'');
+}
+async function updateCnyRate(){
+  try{
+    const response=await fetch('/api/currency/CNY',{cache:'no-store'});
+    if(!response.ok)throw new Error('CBR rate unavailable');
+    const data=await response.json();
+    if(Number(data.rate)>0)window.XUNAN_RATE={value:Number(data.rate),date:data.date||'',fallback:false};
+  }catch(error){
+    window.XUNAN_RATE={...window.XUNAN_RATE,fallback:true};
+  }
+  paintCnyRate();
+  window.dispatchEvent(new CustomEvent('xunan-rate-updated',{detail:window.XUNAN_RATE}));
+  return window.XUNAN_RATE;
+}
+window.XUNAN_RATE_READY=updateCnyRate();
+window.setInterval(updateCnyRate,30*60*1000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)updateCnyRate()});
