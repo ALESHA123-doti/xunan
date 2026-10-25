@@ -33,10 +33,30 @@ $('#carTitle').textContent=car.title;$('#crumbTitle').textContent=car.title;$('#
 $('#carPrice').textContent=`${fmt(car.priceCNY)} ¥`;$('#calcLink').href=`calculator.html?id=${id}`;$('#carRub').textContent=`≈ ${fmt(Math.round(car.priceCNY*window.XUNAN_RATE.value))} ₽ по курсу ЦБ*`;
 const specs=[['Номер кузова',car.bodyNumber||'Уточняется'],['Дата выпуска',car.release],['Двигатель',d.engine],['Коробка передач',d.transmission],['Привод','Передний'],['Цвет',car.color],['Пробег',`${fmt(car.mileage)} км`],['Состояние',car.condition||'Уточняется']];$('#carSpecs').innerHTML=specs.map(([k,v])=>`<div>${k}<b>${v}</b></div>`).join('');
 const panel=$('#detailPanel');function showTab(tab){const title={equipment:'Комплектация',safety:'Безопасность',condition:'Состояние',description:'Описание'}[tab];panel.innerHTML=`<h3>${title}</h3>`;if(tab==='equipment'||tab==='safety')panel.insertAdjacentHTML('beforeend',`<ul>${(d[tab]||[]).map(x=>`<li>${x}</li>`).join('')}</ul>`);else panel.insertAdjacentHTML('beforeend',`<p>${d[tab]||''}</p>`)}
-document.querySelectorAll('#detailTabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#detailTabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');showTab(b.dataset.tab)});showTab('equipment');
+document.querySelectorAll('#detailTabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#detailTabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');showTab(b.dataset.tab)});showTab('description');
 let photo=1;const stage=$('#galleryStage'),main=$('#mainPhoto'),placeholder=$('#photoPlaceholder'),counter=$('#photoCounter'),lightbox=$('#lightbox'),big=$('#lightboxPhoto'),bigPlaceholder=$('#lightboxPlaceholder');const photoPath=n=>`assets/cars/${car.id}/${String(n).padStart(2,'0')}.jpg`;
 function setPhoto(n){photo=((n%22)+22)%22+1;counter.textContent=`${photo} / 22`;document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>b.classList.toggle('active',i+1===photo));main.onload=()=>{main.style.display='block';placeholder.style.display='none'};main.onerror=()=>{main.style.display='none';placeholder.style.display='grid'};main.src=photoPath(photo);if(lightbox.classList.contains('open')){big.onload=()=>{big.style.display='block';bigPlaceholder.style.display='none'};big.onerror=()=>{big.style.display='none';bigPlaceholder.style.display='block'};big.src=photoPath(photo);bigPlaceholder.textContent=`Фото ${photo} из 22 будет добавлено`}}
 $('#galleryThumbs').innerHTML=Array.from({length:22},(_,i)=>`<button type="button" aria-label="Фото ${i+1}" title="Фото ${i+1}">${String(i+1).padStart(2,'0')}</button>`).join('');document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>b.onclick=()=>setPhoto(i+1));$('#photoPrev').onclick=()=>setPhoto(photo-2);$('#photoNext').onclick=()=>setPhoto(photo);stage.onclick=e=>{if(!e.target.closest('button')){lightbox.classList.add('open');setPhoto(photo-1)}};$('#lightboxClose').onclick=()=>lightbox.classList.remove('open');$('#lightboxPrev').onclick=()=>setPhoto(photo-2);$('#lightboxNext').onclick=()=>setPhoto(photo);lightbox.onclick=e=>{if(e.target===lightbox)lightbox.classList.remove('open')};setPhoto(0);
 window.XUNAN_RATE_READY.then(rate=>$('#carRub').textContent=`≈ ${fmt(Math.round(car.priceCNY*rate.value))} ₽ по курсу ЦБ*`);
 
 window.addEventListener("xunan-rate-updated",event=>{const id=new URLSearchParams(location.search).get("id");const car=window.XUNAN_CARS[Number(id)];if(car)document.querySelector("#carRub").textContent="≈ "+fmt(Math.round(car.priceCNY*event.detail.value))+" ₽ по курсу ЦБ"});
+const contactDialog=document.querySelector("#contactDialog");
+const callbackForm=document.querySelector("#callbackForm");
+document.querySelector("#contactNow").addEventListener("click",()=>contactDialog.showModal());
+document.querySelector("#requestCallback").addEventListener("click",()=>{contactDialog.showModal();document.querySelector("#callbackPhone").focus({preventScroll:true})});
+document.querySelector("#contactDialogClose").addEventListener("click",()=>contactDialog.close());
+contactDialog.addEventListener("click",event=>{if(event.target===contactDialog)contactDialog.close()});
+callbackForm.addEventListener("submit",event=>{
+  event.preventDefault();
+  if(!callbackForm.reportValidity())return;
+  const formData=new FormData(callbackForm);
+  const rows=["Заявка на обратный звонок", "Автомобиль: "+car.title, "Телефон: "+formData.get("phone")];
+  if(String(formData.get("name")||"").trim())rows.push("Имя: "+String(formData.get("name")).trim());
+  if(String(formData.get("comment")||"").trim())rows.push("Комментарий: "+String(formData.get("comment")).trim());
+  const recipient=window.XUNAN_CONFIG&&window.XUNAN_CONFIG.leadEmail;
+  if(!recipient){document.querySelector("#callbackStatus").textContent="Адрес получателя не настроен.";return}
+  const subject=encodeURIComponent("Перезвонить по автомобилю "+car.title);
+  const body=encodeURIComponent(rows.join("\n"));
+  document.querySelector("#callbackStatus").textContent="Откроется почтовое приложение с заявкой. Нажмите «Отправить» в письме.";
+  window.location.href="mailto:"+recipient+"?subject="+subject+"&body="+body;
+});

@@ -141,3 +141,51 @@ h1{font-size:clamp(48px,5vw,72px);line-height:1.04;letter-spacing:-1.5px}
  .order-cta{align-items:flex-start;flex-direction:column;padding:24px;margin:38px auto}
  .currency-bar{font-size:11px}
 }
+/* Layout and interaction refinements */
+.benefits{margin:28px auto 0;z-index:1}
+.hero-copy .hero-actions{margin-top:30px}
+.hero-copy>.button{margin-top:30px}
+.about-section,.process-section,.featured-section{padding-top:52px;padding-bottom:52px}
+.order-cta{width:min(1500px,96%);padding:34px 48px;margin:30px auto}
+.process-steps article{transition:background-color .25s,border-color .25s,box-shadow .25s,transform .25s}
+.process-steps article.is-highlighted,.process-steps article:hover,.process-steps article:focus-within{background:#fff5f5;border-color:#d94a4a;box-shadow:0 10px 28px #af050522;transform:translateY(-4px)}
+.button:hover{filter:brightness(.96);transform:none}
+.button-light:hover{background:#f5f5f5;color:var(--red);border-color:#f5f5f5}
+.button-outline:hover{background:var(--red);color:#fff;border-color:var(--red)}
+.button-outline-light:hover{background:#fff;color:var(--red);border-color:#fff}
+.footer-request{color:#fff;background:var(--red);border-color:var(--red)}
+.footer-request:hover{color:#fff;background:var(--deep);border-color:var(--deep)}
+.footer-contact .button{display:inline-flex;align-self:flex-start;color:#fff;background:var(--red);border-color:var(--red)}
+.vehicle-actions{display:flex;gap:12px;margin:18px 0 24px}
+.vehicle-actions .button{flex:1}
+.vehicle-page .detail-price .button{white-space:nowrap}
+.contact-dialog{position:relative;width:min(680px,calc(100vw - 32px));max-width:680px;max-height:90vh;overflow:auto;border:0;border-radius:18px;padding:34px;background:#fff;color:var(--ink);box-shadow:0 20px 70px #0004}
+.contact-dialog::backdrop{background:#10131899;backdrop-filter:blur(3px)}
+.contact-dialog .dialog-close{position:absolute;right:18px;top:16px;border:0;background:#f2f3f4;color:#343a40;width:38px;height:38px;border-radius:50%;font-size:25px;cursor:pointer}
+.contact-dialog h2{font-size:30px;margin:0 40px 10px 0}
+.contact-dialog-intro{font-size:16px;line-height:1.55;color:var(--muted);margin:0 0 20px}
+.contact-methods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.contact-methods>a,.contact-method-wechat{padding:15px 17px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:4px;background:#fff}
+.contact-methods>a:hover{border-color:#d94a4a;background:#fff7f7}
+.contact-methods b,.contact-method-wechat b{font-size:16px}
+.contact-methods span,.contact-method-wechat span{font-size:14px;color:var(--muted)}
+.callback-form{border-top:1px solid var(--line);margin-top:22px;padding-top:20px;display:grid;gap:12px}
+.callback-form h3{font-size:21px;margin:0}
+.callback-form>p{font-size:14px;color:var(--muted);margin:-7px 0 0}
+.callback-form label{display:block;font-size:14px;font-weight:700}
+.callback-form label small{font-size:12px;font-weight:400;color:var(--muted)}
+.callback-form input,.callback-form textarea{display:block;width:100%;margin-top:6px;padding:12px 14px;border:1px solid var(--line);border-radius:9px;font:inherit}
+#callbackStatus{font-size:14px;color:var(--red)}
+@media(max-width:600px){
+ .benefits{margin:20px auto 0}
+ .hero-copy .hero-actions{margin-top:22px}
+ .hero-copy>.button{margin-top:22px}
+ .order-cta{width:92%;padding:24px;margin:24px auto}
+ .vehicle-actions{flex-direction:column}
+ .contact-dialog{padding:28px 18px}
+ .contact-dialog h2{font-size:25px}
+ .contact-methods{grid-template-columns:1fr 1fr;gap:8px}
+ .contact-methods>a,.contact-method-wechat{padding:12px}
+ .contact-methods b,.contact-method-wechat b{font-size:14px}
+ .contact-methods span,.contact-method-wechat span{font-size:12px}
+}
