@@ -12,7 +12,7 @@ window.XUNAN_CARS = [
     "mileage": 30000,
     "condition": "В оригинальной краске, реальный пробег",
     "priceCNY": 170000,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150PS",
     "bodyNumber": "702447"
   },
@@ -29,7 +29,7 @@ window.XUNAN_CARS = [
     "mileage": 29000,
     "condition": "В оригинальной краске, реальный пробег",
     "priceCNY": 141800,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150PS",
     "bodyNumber": "508865"
   },
@@ -46,7 +46,7 @@ window.XUNAN_CARS = [
     "mileage": 29000,
     "condition": "В оригинальной краске, реальный пробег",
     "priceCNY": 179800,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150PS",
     "bodyNumber": "764649"
   },
@@ -63,7 +63,7 @@ window.XUNAN_CARS = [
     "mileage": 16000,
     "condition": "В оригинальной краске, реальный пробег",
     "priceCNY": 171800,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150PS",
     "bodyNumber": "560348"
   },
@@ -80,7 +80,7 @@ window.XUNAN_CARS = [
     "mileage": 41000,
     "condition": "Левое переднее крыло — правка (рихтовка), крышка багажника — подкраска от царапин",
     "priceCNY": 127800,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150PS",
     "bodyNumber": "640818"
   },
@@ -97,7 +97,7 @@ window.XUNAN_CARS = [
     "mileage": 40000,
     "condition": "Правая передняя дверь, правая задняя дверь — правка (рихтовка)",
     "priceCNY": 108000,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150PS",
     "bodyNumber": "663701"
   },
@@ -114,7 +114,7 @@ window.XUNAN_CARS = [
     "mileage": 66000,
     "condition": "В оригинальной краске",
     "priceCNY": 138800,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150PS",
     "bodyNumber": ""
   },
@@ -131,7 +131,7 @@ window.XUNAN_CARS = [
     "mileage": 21000,
     "condition": "2 окрашенных элемента — капот и крышка багажника",
     "priceCNY": 128800,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150PS",
     "bodyNumber": "515564"
   },
@@ -148,7 +148,7 @@ window.XUNAN_CARS = [
     "mileage": 57000,
     "condition": "В оригинальной краске",
     "priceCNY": 143800,
-    "engine": "1.5T",
+    "engine": "1,5 л",
     "power": "140PS",
     "bodyNumber": "334331"
   },
@@ -165,7 +165,7 @@ window.XUNAN_CARS = [
     "mileage": 24000,
     "condition": "правое переднее крыло —  ремонт",
     "priceCNY": 98800,
-    "engine": "1.5L",
+    "engine": "1,5 л",
     "power": "131PS",
     "bodyNumber": "649185"
   },
@@ -182,7 +182,7 @@ window.XUNAN_CARS = [
     "mileage": 65000,
     "condition": "оригинальный кузов и заводская окраска, пробег подтверждён",
     "priceCNY": 178800,
-    "engine": "2.0L",
+    "engine": "2,0 л",
     "power": "156PS",
     "bodyNumber": "319010"
   },
@@ -199,7 +199,7 @@ window.XUNAN_CARS = [
     "mileage": 36000,
     "condition": "В оригинальной краске",
     "priceCNY": 122800,
-    "engine": "1.5L",
+    "engine": "1,5 л",
     "power": "131PS",
     "bodyNumber": "028920"
   },
@@ -216,7 +216,7 @@ window.XUNAN_CARS = [
     "mileage": 43000,
     "condition": "оригинальный кузов и заводская окраска, пробег подтверждён",
     "priceCNY": 75800,
-    "engine": "1.5L",
+    "engine": "1,5 л",
     "power": "124PS",
     "bodyNumber": "003332"
   },
@@ -233,7 +233,7 @@ window.XUNAN_CARS = [
     "mileage": 41000,
     "condition": "В оригинальной краске, реальный пробег",
     "priceCNY": 88000,
-    "engine": "1.5T",
+    "engine": "1,5 л",
     "power": "113 ps",
     "bodyNumber": "760215"
   },
@@ -250,7 +250,7 @@ window.XUNAN_CARS = [
     "mileage": 16000,
     "condition": "Правое переднее крыло, правая передняя дверь — правка (рихтовка), остальные детали в оригинальной краске",
     "priceCNY": 94800,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150ps",
     "bodyNumber": "221976"
   },
@@ -267,7 +267,7 @@ window.XUNAN_CARS = [
     "mileage": 48000,
     "condition": "В оригинальной краске",
     "priceCNY": 97800,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150ps",
     "bodyNumber": "382414"
   },
@@ -284,7 +284,7 @@ window.XUNAN_CARS = [
     "mileage": 60000,
     "condition": "Металлические детали в оригинальной краске",
     "priceCNY": 129800,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150PS",
     "bodyNumber": "300006"
   },
@@ -301,7 +301,7 @@ window.XUNAN_CARS = [
     "mileage": 36000,
     "condition": "Правое переднее крыло — подкраска",
     "priceCNY": 109800,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150PS",
     "bodyNumber": "011782"
   },
@@ -318,7 +318,7 @@ window.XUNAN_CARS = [
     "mileage": 23000,
     "condition": "Правое переднее крыло — окрашено",
     "priceCNY": 84800,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150PS",
     "bodyNumber": "050410"
   },
@@ -335,7 +335,7 @@ window.XUNAN_CARS = [
     "mileage": 41000,
     "condition": "Вся машина в оригинальной краске , правое заднее крыло — правка (рихтовка)г",
     "priceCNY": 94800,
-    "engine": "1.4T",
+    "engine": "1,4 л",
     "power": "150PS",
     "bodyNumber": "250958"
   },
@@ -352,7 +352,7 @@ window.XUNAN_CARS = [
     "mileage": 79000,
     "condition": "В оригинальной краске",
     "priceCNY": 53000,
-    "engine": "1.5L",
+    "engine": "1,5 л",
     "power": "112ps",
     "bodyNumber": "903476"
   },
@@ -369,7 +369,7 @@ window.XUNAN_CARS = [
     "mileage": 30000,
     "condition": "левая передняя дверь и левое переднее крыло — ремонт",
     "priceCNY": 78000,
-    "engine": "1.2T",
+    "engine": "1,2 л",
     "power": "116",
     "bodyNumber": "748332"
   },
@@ -386,7 +386,7 @@ window.XUNAN_CARS = [
     "mileage": 29000,
     "condition": "В оригинальной краске",
     "priceCNY": 122800,
-    "engine": "2.0T",
+    "engine": "2,0 л",
     "power": "158PS",
     "bodyNumber": "535487"
   },
@@ -403,7 +403,7 @@ window.XUNAN_CARS = [
     "mileage": 53000,
     "condition": "Правое переднее крыло, задняя крышка багажника — локальная правка (рихтовка)",
     "priceCNY": 79800,
-    "engine": "1.5L",
+    "engine": "1,5 л",
     "power": "115PS",
     "bodyNumber": "083744"
   }

@@ -1,3 +1,53 @@
-const $=s=>document.querySelector(s),fmt=n=>new Intl.NumberFormat('ru-RU').format(n),cars=window.XUNAN_CARS||[],grid=$('#carGrid');
-if(grid){const brand=$('#brandFilter');[...new Set(cars.map(c=>c.make))].forEach(b=>brand.insertAdjacentHTML('beforeend',`<option>${b}</option>`));function render(){const query=$('#search').value.toLowerCase();let list=cars.filter(c=>{const fuel='Бензин',drive='Передний';return(!brand.value||c.make===brand.value)&&(!query||`${c.title} ${c.trim}`.toLowerCase().includes(query))&&(!$('#fuelFilter').value||fuel===$('#fuelFilter').value)&&(!$('#driveFilter').value||drive===$('#driveFilter').value)&&(!$('#yearFrom').value||c.year>=+$('#yearFrom').value)&&(!$('#yearTo').value||c.year<=+$('#yearTo').value)&&(!$('#priceFrom').value||c.priceCNY>=+$('#priceFrom').value)&&(!$('#priceTo').value||c.priceCNY<=+$('#priceTo').value)});const sort=$('#sort').value;if(sort==='cheap')list.sort((a,b)=>a.priceCNY-b.priceCNY);if(sort==='expensive')list.sort((a,b)=>b.priceCNY-a.priceCNY);if(sort==='new')list.sort((a,b)=>(b.year||0)-(a.year||0));$('#resultCount').textContent=`Найдено: ${list.length} автомобилей из ${cars.length}`;const rate=window.XUNAN_RATE.value;grid.innerHTML=list.map(c=>`<article class="car-card"><div class="car-image"><a class="car-image-link" href="vehicle.html?id=${c.id}" aria-label="Открыть ${c.title}"><img src="assets/cars/${c.id}/01.jpg" alt="${c.title}" loading="lazy"></a></div><div class="car-content"><h3>${c.title}</h3><div class="car-trim">${c.trim}</div><div class="car-meta">${c.color}　·　${fmt(c.mileage)} км　·　${c.engine}</div><strong class="car-price">${fmt(c.priceCNY)} ¥</strong><small class="rub-price">≈ ${fmt(Math.round(c.priceCNY*rate))} ₽ по курсу ЦБ*</small><a class="button button-outline" href="vehicle.html?id=${c.id}">Подробнее</a></div></article>`).join('')||'<p class="muted">По выбранным условиям автомобили не найдены.</p>';grid.querySelectorAll('.car-image img').forEach(img=>img.onerror=()=>{img.remove();const link=img.parentElement;link.classList.add('no-photo');link.textContent='Фото скоро появится'});}window.XUNAN_RATE_READY.then(()=>render());window.addEventListener('xunan-rate-updated',render);['brandFilter','fuelFilter','driveFilter','yearFrom','yearTo','priceFrom','priceTo','sort'].forEach(id=>$('#'+id).addEventListener('change',render));$('#applyFilters').onclick=render;$('#applySearch').onclick=render;$('#search').onkeydown=e=>{if(e.key==='Enter')render()};$('#resetFilters').onclick=()=>{['brandFilter','fuelFilter','driveFilter','yearFrom','yearTo','priceFrom','priceTo','search'].forEach(id=>$('#'+id).value='');render()}}
-const menu=$('.menu-toggle');if(menu)menu.onclick=()=>document.querySelector('.topbar nav').classList.toggle('open');document.querySelectorAll('.topbar nav a').forEach(a=>a.addEventListener('click',()=>document.querySelector('.topbar nav').classList.remove('open')));
+const $ = selector => document.querySelector(selector);
+const fmt = value => new Intl.NumberFormat('ru-RU').format(value);
+const normalizeEngineLabel = value => String(value || '').replace(/\b(\d+(?:[.,]\d+)?)\s*[TL]\b/gi, (_, size) => `${size.replace('.', ',')} л`);
+const cars = window.XUNAN_CARS || [];
+const grid = $('#carGrid');
+
+if (grid) {
+  const brand = $('#brandFilter');
+  [...new Set(cars.map(car => car.make))].forEach(make => brand.insertAdjacentHTML('beforeend', `<option>${make}</option>`));
+
+  function render() {
+    const query = $('#search').value.toLowerCase();
+    let list = cars.filter(car => {
+      const fuel = 'Бензин';
+      const drive = 'Передний';
+      return (!brand.value || car.make === brand.value)
+        && (!query || `${car.title} ${car.trim}`.toLowerCase().includes(query))
+        && (!$('#fuelFilter').value || fuel === $('#fuelFilter').value)
+        && (!$('#driveFilter').value || drive === $('#driveFilter').value)
+        && (!$('#yearFrom').value || car.year >= +$('#yearFrom').value)
+        && (!$('#yearTo').value || car.year <= +$('#yearTo').value)
+        && (!$('#priceFrom').value || car.priceCNY >= +$('#priceFrom').value)
+        && (!$('#priceTo').value || car.priceCNY <= +$('#priceTo').value);
+    });
+
+    const sort = $('#sort').value;
+    if (sort === 'cheap') list.sort((a, b) => a.priceCNY - b.priceCNY);
+    if (sort === 'expensive') list.sort((a, b) => b.priceCNY - a.priceCNY);
+    if (sort === 'new') list.sort((a, b) => (b.year || 0) - (a.year || 0));
+    $('#resultCount').textContent = `Найдено: ${list.length} автомобилей из ${cars.length}`;
+    const rate = window.XUNAN_RATE.value;
+    grid.innerHTML = list.map(car => `<article class="car-card"><div class="car-image">${car.id === 0 ? '<img src="assets/cars/0/01.jpg" alt="Audi Q3 2022, вид спереди под углом">' : '<span>Место для фото</span>'}<button class="favorite" aria-label="В избранное">♡</button></div><div class="car-content"><h3>${car.title}</h3><div class="car-trim">${normalizeEngineLabel(car.trim)}</div><div class="car-meta">${car.color}　·　${fmt(car.mileage)} км　·　${normalizeEngineLabel(car.engine)}</div><strong class="car-price">${fmt(car.priceCNY)} ¥</strong><small class="rub-price">≈ ${fmt(Math.round(car.priceCNY * rate))} ₽ по курсу ЦБ*</small><a class="button button-outline" href="vehicle.html?id=${car.id}">Подробнее</a></div></article>`).join('') || '<p class="muted">По выбранным условиям автомобили не найдены.</p>';
+    grid.querySelectorAll('.favorite').forEach(button => button.onclick = () => {
+      button.classList.toggle('active');
+      button.textContent = button.classList.contains('active') ? '♥' : '♡';
+    });
+  }
+
+  window.XUNAN_RATE_READY.then(render);
+  window.addEventListener('xunan-rate-updated', render);
+  ['brandFilter', 'fuelFilter', 'driveFilter', 'yearFrom', 'yearTo', 'priceFrom', 'priceTo', 'sort'].forEach(id => $(`#${id}`).addEventListener('change', render));
+  $('#applyFilters').onclick = render;
+  $('#applySearch').onclick = render;
+  $('#search').onkeydown = event => { if (event.key === 'Enter') render(); };
+  $('#resetFilters').onclick = () => {
+    ['brandFilter', 'fuelFilter', 'driveFilter', 'yearFrom', 'yearTo', 'priceFrom', 'priceTo', 'search'].forEach(id => $(`#${id}`).value = '');
+    render();
+  };
+}
+
+const menu = $('.menu-toggle');
+if (menu) menu.onclick = () => document.querySelector('.topbar nav').classList.toggle('open');
+document.querySelectorAll('.topbar nav a').forEach(link => link.addEventListener('click', () => document.querySelector('.topbar nav').classList.remove('open')));

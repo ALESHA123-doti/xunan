@@ -34,63 +34,123 @@ $('#carPrice').textContent=`${fmt(car.priceCNY)} ¥`;$('#calcLink').href=`calcul
 const specs=[['Номер кузова',car.bodyNumber||'Уточняется'],['Дата выпуска',car.release],['Двигатель',d.engine],['Коробка передач',d.transmission],['Привод','Передний'],['Цвет',car.color],['Пробег',`${fmt(car.mileage)} км`],['Состояние',car.condition||'Уточняется']];$('#carSpecs').innerHTML=specs.map(([k,v])=>`<div>${k}<b>${v}</b></div>`).join('');
 const panel=$('#detailPanel');function showTab(tab){const title={equipment:'Комплектация',safety:'Безопасность',condition:'Состояние',description:'Описание'}[tab];panel.innerHTML=`<h3>${title}</h3>`;if(tab==='equipment'||tab==='safety'){const entries=(d[tab]||[]).flatMap(item=>String(item).split(/[;；]\s*/)).map(item=>item.trim().replace(/[.!?…]+$/,'')).filter(Boolean);panel.insertAdjacentHTML('beforeend',`<ul class="clean-feature-list">${entries.map(item=>{const text=item.charAt(0).toLocaleUpperCase('ru-RU')+item.slice(1);return `<li>${text}</li>`}).join('')}</ul>`) }else panel.insertAdjacentHTML('beforeend',`<p>${d[tab]||''}</p>`)}
 document.querySelectorAll('#detailTabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#detailTabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');showTab(b.dataset.tab)});showTab('description');
-let photo=0;
+
+let photo=1;
+const photoCount=Number(car.id)===0?19:22;
 const stage=$('#galleryStage'),main=$('#mainPhoto'),placeholder=$('#photoPlaceholder'),counter=$('#photoCounter'),lightbox=$('#lightbox'),big=$('#lightboxPhoto'),bigPlaceholder=$('#lightboxPlaceholder');
 const photoPath=n=>`assets/cars/${car.id}/${String(n).padStart(2,'0')}.jpg`;
-let photos=[];
-function updatePhoto(){
-  const count=photos.length;
-  if(!count){main.style.display='none';placeholder.style.display='grid';placeholder.textContent='Фотографии скоро появятся';counter.textContent='0 / 0';$('#galleryThumbs').innerHTML='';$('#photoPrev').hidden=true;$('#photoNext').hidden=true;return}
-  photo=(photo+count)%count;
-  const path=photoPath(photos[photo]);
-  counter.textContent=`${photo+1} / ${count}`;
-  document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>b.classList.toggle('active',i===photo));
-  main.onload=()=>{main.style.display='block';placeholder.style.display='none'};
-  main.onerror=()=>{main.style.display='none';placeholder.style.display='grid'};
-  main.src=path;
+
+function setPhoto(n){
+  photo=((n-1)%photoCount+photoCount)%photoCount+1;
+  counter.textContent=`${photo} / ${photoCount}`;
+  document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>b.classList.toggle('active',i+1===photo));
+
+  main.onload=()=>{
+    main.style.display='block';
+    placeholder.style.display='none';
+  };
+  main.onerror=()=>{
+    main.style.display='none';
+    placeholder.style.display='grid';
+  };
+  main.src=photoPath(photo);
+
   if(lightbox.classList.contains('open')){
-    big.onload=()=>{big.style.display='block';bigPlaceholder.style.display='none'};
-    big.onerror=()=>{big.style.display='none';bigPlaceholder.style.display='block'};
-    big.src=path;bigPlaceholder.textContent='Фотография недоступна';
+    big.onload=()=>{
+      big.style.display='block';
+      bigPlaceholder.style.display='none';
+    };
+    big.onerror=()=>{
+      big.style.display='none';
+      bigPlaceholder.style.display='block';
+    };
+    big.src=photoPath(photo);
+    bigPlaceholder.textContent=`Фото ${photo} из ${photoCount} будет добавлено`;
   }
 }
-function goPhoto(index){if(!photos.length)return;photo=(index+photos.length)%photos.length;updatePhoto()}
-async function loadPhotos(){
-  const checks=Array.from({length:22},(_,i)=>i+1).map(n=>new Promise(resolve=>{
-    const img=new Image();img.onload=()=>resolve(n);img.onerror=()=>resolve(null);img.src=photoPath(n);
-  }));
-  photos=(await Promise.all(checks)).filter(Boolean);
-  $('#galleryThumbs').innerHTML=photos.map((n,i)=>`<button type="button" aria-label="Фото ${i+1}" title="Фото ${i+1}"><img src="${photoPath(n)}" alt="Миниатюра ${i+1}"></button>`).join('');
-  document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>b.onclick=()=>goPhoto(i));
-  $('#photoPrev').onclick=()=>goPhoto(photo-1);$('#photoNext').onclick=()=>goPhoto(photo+1);
-  stage.onclick=e=>{if(!e.target.closest('button')&&photos.length){lightbox.classList.add('open');updatePhoto()}};
-  $('#lightboxClose').onclick=()=>lightbox.classList.remove('open');
-  $('#lightboxPrev').onclick=()=>goPhoto(photo-1);$('#lightboxNext').onclick=()=>goPhoto(photo+1);
-  lightbox.onclick=e=>{if(e.target===lightbox)lightbox.classList.remove('open')};
-  updatePhoto();
-}
-loadPhotos();
+
+$('#galleryThumbs').innerHTML=Array.from({length:photoCount},(_,i)=>{
+  const n=i+1;
+  return `<button type="button" aria-label="Открыть фото ${n}" title="Фото ${n}">
+    <img src="${photoPath(n)}" alt="" loading="lazy" draggable="false">
+    <span class="thumb-number">${String(n).padStart(2,'0')}</span>
+  </button>`;
+}).join('');
+
+document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>{
+  b.addEventListener('click',event=>{
+    event.preventDefault();
+    event.stopPropagation();
+    setPhoto(i+1);
+  });
+
+  const image=b.querySelector('img');
+  image.addEventListener('error',()=>{
+    image.remove();
+    b.insertAdjacentHTML('afterbegin',`<span style="display:grid;place-items:center;width:100%;height:100%;font-size:11px;color:#626a73;pointer-events:none">${String(i+1).padStart(2,'0')}</span>`);
+  },{once:true});
+});
+
+$('#photoPrev').onclick=()=>setPhoto(photo-1);
+$('#photoNext').onclick=()=>setPhoto(photo+1);
+
+stage.onclick=e=>{
+  if(!e.target.closest('button')){
+    lightbox.classList.add('open');
+    setPhoto(photo);
+  }
+};
+
+$('#lightboxClose').onclick=()=>lightbox.classList.remove('open');
+$('#lightboxPrev').onclick=()=>setPhoto(photo-1);
+$('#lightboxNext').onclick=()=>setPhoto(photo+1);
+lightbox.onclick=e=>{
+  if(e.target===lightbox)lightbox.classList.remove('open');
+};
+
+setPhoto(1);
+
 window.XUNAN_RATE_READY.then(rate=>$('#carRub').textContent=`≈ ${fmt(Math.round(car.priceCNY*rate.value))} ₽ по курсу ЦБ*`);
 
-window.addEventListener("xunan-rate-updated",event=>{const id=new URLSearchParams(location.search).get("id");const car=window.XUNAN_CARS[Number(id)];if(car)document.querySelector("#carRub").textContent="≈ "+fmt(Math.round(car.priceCNY*event.detail.value))+" ₽ по курсу ЦБ"});
+window.addEventListener("xunan-rate-updated",event=>{
+  const currentId=new URLSearchParams(location.search).get("id");
+  const currentCar=window.XUNAN_CARS[Number(currentId)];
+  if(currentCar)document.querySelector("#carRub").textContent="≈ "+fmt(Math.round(currentCar.priceCNY*event.detail.value))+" ₽ по курсу ЦБ";
+});
+
 const contactDialog=document.querySelector("#contactDialog");
 const callbackDialog=document.querySelector("#callbackDialog");
 const callbackForm=document.querySelector("#callbackForm");
+
 document.querySelector("#contactNow").addEventListener("click",()=>contactDialog.showModal());
-document.querySelector("#requestCallback").addEventListener("click",()=>{callbackDialog.showModal();document.querySelector("#callbackPhone").focus({preventScroll:true})});
+document.querySelector("#requestCallback").addEventListener("click",()=>{
+  callbackDialog.showModal();
+  document.querySelector("#callbackPhone").focus({preventScroll:true});
+});
 document.querySelector("#contactDialogClose").addEventListener("click",()=>contactDialog.close());
 document.querySelector("#callbackDialogClose").addEventListener("click",()=>callbackDialog.close());
-contactDialog.addEventListener("click",event=>{if(event.target===contactDialog)contactDialog.close()});
-callbackDialog.addEventListener("click",event=>{if(event.target===callbackDialog)callbackDialog.close()});
+contactDialog.addEventListener("click",event=>{
+  if(event.target===contactDialog)contactDialog.close();
+});
+callbackDialog.addEventListener("click",event=>{
+  if(event.target===callbackDialog)callbackDialog.close();
+});
+
 callbackForm.addEventListener("submit",event=>{
   event.preventDefault();
   if(!callbackForm.reportValidity())return;
+
   const formData=new FormData(callbackForm);
-  const rows=["Заявка на обратный звонок", "Автомобиль: "+car.title, "Телефон: "+formData.get("phone")];
+  const rows=["Заявка на обратный звонок","Автомобиль: "+car.title,"Телефон: "+formData.get("phone")];
   if(String(formData.get("name")||"").trim())rows.push("Имя: "+String(formData.get("name")).trim());
   if(String(formData.get("comment")||"").trim())rows.push("Комментарий: "+String(formData.get("comment")).trim());
+
   const recipient=window.XUNAN_CONFIG&&window.XUNAN_CONFIG.leadEmail;
-  if(!recipient){document.querySelector("#callbackStatus").textContent="Адрес получателя не настроен.";return}
+  if(!recipient){
+    document.querySelector("#callbackStatus").textContent="Адрес получателя не настроен.";
+    return;
+  }
+
   const subject=encodeURIComponent("Перезвонить по автомобилю "+car.title);
   const body=encodeURIComponent(rows.join("\n"));
   document.querySelector("#callbackStatus").textContent="Откроется почтовое приложение с заявкой. Нажмите «Отправить» в письме.";

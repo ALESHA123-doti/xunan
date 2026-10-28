@@ -13,20 +13,36 @@ function syncContactField(){
 }
 method.addEventListener('change',syncContactField);
 const names={contactMethod:'Канал связи',contactValue:'Контакт',name:'Имя',make:'Марка',model:'Модель',color:'Цвет',body:'Тип кузова',yearFrom:'Год выпуска от',yearTo:'Год выпуска до',budgetFrom:'Бюджет от, ¥',budgetTo:'Бюджет до, ¥',engineType:'Тип двигателя',drive:'Привод',transmission:'Коробка передач',mileageMax:'Максимальный пробег, км',comment:'Дополнительные пожелания'};
-form.addEventListener('submit',event=>{
+form.addEventListener('submit', async event=>{
   event.preventDefault();
   if(!form.reportValidity())return;
+  const button=form.querySelector('button[type="submit"]');
+  const originalText=button?button.textContent:'';
+  const data=new FormData(form);
   const rows=[];
-  for(const [key,val] of new FormData(form).entries()){
+  for(const [key,val] of data.entries()){
     const text=String(val).trim();
     if(text)rows.push((names[key]||key)+': '+text);
   }
-  const recipient=window.XUNAN_CONFIG&&window.XUNAN_CONFIG.leadEmail;
-  if(!recipient){status.textContent='Адрес получателя пока не настроен. Заявка не отправлена.';return}
-  const subject=encodeURIComponent('Заявка на подбор автомобиля — XUNAN');
-  const body=encodeURIComponent(rows.join('\n'));
-  status.textContent='Откроется ваше почтовое приложение с подготовленной заявкой. Нажмите «Отправить» в письме.';
-  window.location.href='mailto:'+recipient+'?subject='+subject+'&body='+body;
+  data.set('_subject','Заявка на подбор автомобиля — XUNAN');
+  data.set('_template','table');
+  data.set('_honey','');
+  data.set('Заявка',rows.join('\n'));
+  if(button){button.disabled=true;button.textContent='Отправляем…'}
+  status.textContent='Отправляем заявку…';
+  try{
+    const response=await fetch('https://formsubmit.co/ajax/xunanautomobiletrade54@gmail.com',{
+      method:'POST',headers:{'Accept':'application/json'},body:data
+    });
+    const result=await response.json();
+    if(!response.ok || result.success===false)throw new Error(result.message||'Не удалось отправить заявку');
+    status.textContent='Спасибо! Заявка отправлена. Мы свяжемся с вами.';
+    form.reset();syncContactField();
+  }catch(error){
+    status.textContent='Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь с нами по телефону +7 953 874-00-33.';
+  }finally{
+    if(button){button.disabled=false;button.textContent=originalText}
+  }
 });
 syncContactField();
 const menu=document.querySelector('.menu-toggle');
