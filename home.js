@@ -9,7 +9,7 @@ document.querySelector('.hero').addEventListener('mouseenter',()=>clearInterval(
 document.querySelector('.hero').addEventListener('mouseleave',()=>{clearInterval(timer);timer=setInterval(()=>showSlide(current+1),6000)});
 document.querySelectorAll('.hero-slide').forEach((slide,index)=>{
   const slot=slide.querySelector('.hero-image-slot');
-  if(!slot)return;
+  if(!slot || slot.querySelector('img, video'))return;
   const img=document.createElement('img');
   img.src=`assets/hero/${String(index+1).padStart(2,'0')}.jpg`;
   img.alt='Автомобиль XUNAN';img.className='hero-photo-img';

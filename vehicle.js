@@ -36,7 +36,7 @@ const panel=$('#detailPanel');function showTab(tab){const title={equipment:'Ко
 document.querySelectorAll('#detailTabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#detailTabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');showTab(b.dataset.tab)});showTab('description');
 
 let photo=1;
-const photoCount=Number(car.id)===0?19:22;
+const photoCount=({0:19,1:19,2:19,3:19,4:19,5:19})[Number(car.id)]||22;
 const stage=$('#galleryStage'),main=$('#mainPhoto'),placeholder=$('#photoPlaceholder'),counter=$('#photoCounter'),lightbox=$('#lightbox'),big=$('#lightboxPhoto'),bigPlaceholder=$('#lightboxPlaceholder');
 const photoPath=n=>`assets/cars/${car.id}/${String(n).padStart(2,'0')}.jpg`;
 

@@ -1,0 +1,10 @@
+# Local authoring tools and intermediate files
+.tools/
+output/
+inspect_a3.py
+inspect_zip.py
+
+# Unused image and video drafts
+assets/video/
+assets/images/hero-delivery.png
+assets/images/hero-remote-inspection.png
