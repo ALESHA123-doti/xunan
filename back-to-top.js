@@ -26,9 +26,16 @@
     button.title = 'Наверх';
     button.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
     document.body.appendChild(button);
-    const update = () => button.classList.toggle('is-visible', window.scrollY > 350);
+    const update = () => {
+      const root = document.scrollingElement || document.documentElement;
+      const atBottom = root.scrollTop > 0 && root.scrollTop + root.clientHeight >= root.scrollHeight - 2;
+      button.classList.toggle('is-visible', atBottom);
+    };
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('pageshow', update);
+    window.addEventListener('resize', update);
+    window.addEventListener('load', update);
+    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(update).observe(document.body);
     update();
     button.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
