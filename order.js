@@ -39,7 +39,7 @@ form.addEventListener('submit', async event=>{
     status.textContent='Спасибо! Заявка отправлена. Мы свяжемся с вами.';
     form.reset();syncContactField();
   }catch(error){
-    status.textContent='Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь с нами по телефону +7 953 874-00-33.';
+    status.textContent='Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь с нами по телефону +7 983 009-66-66.';
   }finally{
     if(button){button.disabled=false;button.textContent=originalText}
   }
