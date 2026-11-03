@@ -29,6 +29,11 @@
     const update = () => {
       const root = document.scrollingElement || document.documentElement;
       const atBottom = root.scrollTop > 0 && root.scrollTop + root.clientHeight >= root.scrollHeight - 2;
+      const logo = document.querySelector('footer .brand-logo');
+      if (atBottom && logo) {
+        const rect = logo.getBoundingClientRect();
+        button.style.top = (rect.top + rect.height / 2) + 'px';
+      }
       button.classList.toggle('is-visible', atBottom);
     };
     window.addEventListener('scroll', update, { passive: true });
