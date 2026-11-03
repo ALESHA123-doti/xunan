@@ -136,23 +136,45 @@ callbackDialog.addEventListener("click",event=>{
   if(event.target===callbackDialog)callbackDialog.close();
 });
 
-callbackForm.addEventListener("submit",event=>{
+callbackForm.addEventListener("submit",async event=>{
   event.preventDefault();
+  const button=callbackForm.querySelector('button[type="submit"]');
+  if(button&&button.disabled)return;
   if(!callbackForm.reportValidity())return;
 
-  const formData=new FormData(callbackForm);
-  const rows=["Заявка на обратный звонок","Автомобиль: "+car.title,"Телефон: "+formData.get("phone")];
-  if(String(formData.get("name")||"").trim())rows.push("Имя: "+String(formData.get("name")).trim());
-  if(String(formData.get("comment")||"").trim())rows.push("Комментарий: "+String(formData.get("comment")).trim());
-
+  const status=document.querySelector("#callbackStatus");
   const recipient=window.XUNAN_CONFIG&&window.XUNAN_CONFIG.leadEmail;
   if(!recipient){
-    document.querySelector("#callbackStatus").textContent="Адрес получателя не настроен.";
+    status.textContent="Не удалось отправить заявку. Свяжитесь с нами по телефону +7 983 009-66-66.";
     return;
   }
 
-  const subject=encodeURIComponent("Перезвонить по автомобилю "+car.title);
-  const body=encodeURIComponent(rows.join("\n"));
-  document.querySelector("#callbackStatus").textContent="Откроется почтовое приложение с заявкой. Нажмите «Отправить» в письме.";
-  window.location.href="mailto:"+recipient+"?subject="+subject+"&body="+body;
+  const formData=new FormData(callbackForm);
+  const data=new FormData();
+  data.set("Автомобиль",car.title);
+  data.set("Телефон",String(formData.get("phone")||"").trim());
+  if(String(formData.get("name")||"").trim())data.set("Имя",String(formData.get("name")).trim());
+  if(String(formData.get("comment")||"").trim())data.set("Комментарий",String(formData.get("comment")).trim());
+  data.set("_subject","Заявка по автомобилю — XUNAN");
+  data.set("_template","table");
+  data.set("_honey","");
+
+  const originalText=button?button.textContent:"";
+  if(button){button.disabled=true;button.textContent="Отправляем…"}
+  status.textContent="Отправляем заявку…";
+  try{
+    const response=await fetch("https://formsubmit.co/ajax/"+recipient,{
+      method:"POST",headers:{"Accept":"application/json"},body:data
+    });
+    const result=await response.json();
+    if(!response.ok || !(result&&(
+      result.success===true || result.success==="true"
+    )))throw new Error("Отправка не подтверждена");
+    status.textContent="Спасибо! Заявка отправлена. Мы свяжемся с вами";
+    callbackForm.reset();
+  }catch(error){
+    status.textContent="Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь с нами по телефону +7 983 009-66-66.";
+  }finally{
+    if(button){button.disabled=false;button.textContent=originalText}
+  }
 });
