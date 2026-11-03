@@ -1,9 +1,9 @@
 .privacy-footer-link{width:min(1280px,100%);margin:0 auto 14px;font-size:13px;line-height:1.5}.privacy-footer-link a{color:inherit;text-decoration:underline;text-underline-offset:3px}.privacy-consent{display:flex;align-items:flex-start;gap:10px;width:100%;margin:16px 0;font-size:14px;line-height:1.5}.privacy-consent input[type="checkbox"]{appearance:auto;width:18px;height:18px;min-width:18px;flex:0 0 18px;margin:2px 0 0;padding:0;accent-color:#af0505}.privacy-consent label{display:block!important;margin:0;font-size:14px;font-weight:400;line-height:1.5}.privacy-consent a{color:inherit;text-decoration:underline;text-underline-offset:3px}.order-submit .privacy-consent{flex-basis:100%;grid-column:1/-1}
 /* Compact shared footer layout. */
-footer { display:block; padding:52px 5% 38px; }
-footer .footer-main { width:min(980px,100%); margin:0 auto 36px; padding:0; grid-template-columns:200px minmax(260px,1.2fr) minmax(180px,1fr); gap:32px; }
-footer .privacy-footer-link { width:min(980px,100%); margin:0 auto 12px; }
-footer .footer-bottom { width:min(980px,100%); margin:0 auto; padding-top:12px; gap:16px; }
+footer { display:block; padding:28px 5% 22px; }
+footer .footer-main { width:100%; margin:0 auto 22px; padding:0; grid-template-columns:1fr 1fr 1fr; gap:32px; }
+footer .privacy-footer-link { width:100%; margin:0 auto 12px; }
+footer .footer-bottom { width:100%; margin:0 auto; padding-top:12px; gap:16px; }
 footer .footer-contact, footer .footer-nav { gap:8px; }
 @media(max-width:900px) {
   footer .footer-main { grid-template-columns:170px minmax(220px,1.2fr) minmax(150px,1fr); gap:24px; }
