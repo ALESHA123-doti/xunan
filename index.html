@@ -2,15 +2,27 @@
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#AF0505"><title>XUNAN — автомобили из Китая</title><link rel="icon" href="assets/favicon.ico"><link rel="stylesheet" href="styles.css?v=contacts-12"><link rel="stylesheet" href="privacy.css?v=6"><style>
 @media (max-width: 700px) {
   #home.hero { height: auto; min-height: 0; }
-  #home .hero-slide { position: relative; inset: auto; padding-bottom: 52px; }
+  #home .hero-slide {
+    position: relative; inset: auto; min-height: 460px;
+    padding-bottom: 66px; isolation: isolate;
+  }
   #home .hero-copy { position: relative; width: auto; height: auto; padding: 28px 6% 0; }
   #home .hero-copy h1 { font-size: clamp(28px, 7.5vw, 42px); min-height: 0; }
   #home .hero-copy > .hero-actions,
   #home .hero-copy > .button { position: static; width: 100%; max-width: 340px; margin: 18px 0 0 !important; }
   #home .hero-copy .button { min-height: 44px; height: auto; }
   #home .hero-slide .hero-image-slot {
-    position: relative; inset: auto; width: 100%; height: clamp(144px, 42vw, 240px);
-    margin: 8px 0 0; pointer-events: none;
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    margin: 0; opacity: 1; pointer-events: none;
+  }
+  #home .hero-slide .hero-image-slot > img {
+    -webkit-mask-image: none; mask-image: none;
+    object-position: 60% center;
+  }
+  #home .hero-slide .hero-image-slot::after {
+    content: ""; position: absolute; inset: 0; filter: none;
+    background: linear-gradient(90deg, rgba(24,14,14,.83), rgba(24,14,14,.37)),
+                linear-gradient(0deg, rgba(24,14,14,.68), transparent 35%);
   }
   #home .slide-arrow { top: auto; bottom: 5px; width: 44px; height: 44px; }
   #home .slide-arrow.prev { left: 6%; }
