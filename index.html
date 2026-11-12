@@ -27,13 +27,8 @@
     padding-bottom: 55px;
     isolation: isolate;
   }
-  #home .hero-slide {
-    grid-area: 1 / 1;
-    display: flex;
-    flex-direction: column;
-    visibility: hidden;
-  }
-  #home .hero-slide.active { visibility: visible; }
+  #home .hero-slide:first-child { display: flex; flex-direction: column; }
+  #home .hero-slide:not(:first-child) { display: none; }
   #home .hero-copy {
     position: relative;
     width: 100%;
@@ -73,16 +68,8 @@
     mask-image: radial-gradient(ellipse 70% 71% at center, #000 43%, rgba(0,0,0,.84) 58%, rgba(0,0,0,.38) 73%, transparent 94%);
   }
   #home .hero-slide .hero-image-slot::after { content: none; }
-  #home .slide-arrow { top: auto; bottom: 7px; width: 44px; height: 44px; }
-  #home .slide-arrow.prev { left: 5%; }
-  #home .slide-arrow.next { right: 5%; }
-  #home .slide-dots { bottom: 14px; gap: 2px; }
-  #home .slide-dots button { width: 28px; height: 28px; border: 0; background: transparent; }
-  #home .slide-dots button::before {
-    content: ""; display: block; width: 8px; height: 8px; margin: auto;
-    border: 1px solid #fff; border-radius: 50%;
-  }
-  #home .slide-dots button.active::before { background: #fff; }
+  #home .slide-arrow,
+  #home .slide-dots,
   #home .slide-counter { display: none; }
   #home + .benefits { width: 92%; margin: 14px auto 0; padding: 0; gap: 8px; grid-template-columns: repeat(2,minmax(0,1fr)); }
   #home + .benefits article { min-height: 0; padding: 10px; gap: 7px; }
