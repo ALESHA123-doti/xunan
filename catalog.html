@@ -1,4 +1,48 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Каталог автомобилей — XUNAN</title><link rel="icon" href="assets/favicon.ico"><link rel="stylesheet" href="styles.css?v=contacts-12"><link rel="stylesheet" href="privacy.css?v=6"></head><body>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Каталог автомобилей — XUNAN</title><link rel="icon" href="assets/favicon.ico"><link rel="stylesheet" href="styles.css?v=contacts-12"><link rel="stylesheet" href="privacy.css?v=6"><style>
+@media (max-width: 900px) {
+  .topbar { gap: 8px; }
+  .topbar > .menu-toggle {
+    order: -1; flex: 0 0 44px; min-height: 44px;
+    margin: 0; padding: 0; cursor: pointer;
+  }
+  .topbar > .brand { flex: 1 1 auto; min-width: 0; }
+  .topbar > .brand > .brand-logo { max-width: 100%; max-height: 62px; }
+  .topbar > .button { flex: 0 0 auto; }
+  .topbar nav { top: 100%; }
+}
+@media (max-width: 700px) {
+  .topbar { height: 64px; padding-inline: 3%; }
+  .topbar > .brand { height: 58px; }
+  .topbar > .brand > .brand-logo { max-height: 56px; }
+  .topbar > .button { padding-inline: 9px; }
+}
+.catalog-filter-toggle { display: none; }
+@media (max-width: 700px) {
+  .catalog-page .catalog-layout { grid-template-columns: minmax(0,1fr); gap: 12px; }
+  .catalog-page .catalog-filter-toggle:not([hidden]) {
+    display: flex; justify-content: space-between; align-items: center;
+    width: 100%; min-height: 44px; padding: 8px 14px; font-size: 14px;
+  }
+  .catalog-page .catalog-filter-toggle:not([hidden])[aria-expanded="false"] + .filters { display: none; }
+  .catalog-page .filters {
+    grid-template-columns: repeat(2,minmax(0,1fr)); margin: 0; padding: 12px; gap: 10px;
+  }
+  .catalog-page .filters h3, .catalog-page .filter-submit { grid-column: 1 / -1; }
+  .catalog-page .filters > label { min-width: 0; font-size: 13px; }
+  .catalog-page .filters > label:nth-of-type(2),
+  .catalog-page .filters > label:nth-of-type(3) { grid-column: 1 / -1; }
+  .catalog-page .filters select, .catalog-page .filters input { min-width: 0; font-size: 16px; padding-block: 8px; }
+  .catalog-page .range-inputs > * { flex: 1 1 0; min-width: 0; }
+}
+</style></head><body>
 <header class="topbar"><a class="brand" href="index.html"><img class="brand-logo" src="assets/logo.png" alt="XUNAN Automobile Trade"></a><button class="menu-toggle" aria-label="Открыть меню">☰</button><nav><a href="index.html">Главная</a><a href="catalog.html">Каталог</a><a href="order.html">Машина на заказ</a><a href="calculator.html">Расчёт</a><a href="index.html#about">О компании</a><a href="index.html#contacts">Контакты</a></nav><a class="button button-light" href="order.html">Оставить заявку</a></header><div class="currency-bar">Юань ЦБ РФ (CNY/RUB): <b id="cnyRate">загрузка…</b> <span id="cnyRateDate"></span></div>
-<main class="catalog-page section-wrap"><div class="crumb"><a href="index.html">Главная</a>　/　Каталог</div><div class="section-heading"><div><h2>Каталог автомобилей</h2></div></div><div class="catalog-layout"><aside class="filters"><h3>Фильтры <button id="resetFilters" class="reset">Сбросить</button></h3><label>Марка<select id="brandFilter"><option value="">Все марки</option></select></label><label>Год выпуска<div class="range-inputs"><select id="yearFrom" aria-label="Год выпуска от"><option value="">От года</option></select><select id="yearTo" aria-label="Год выпуска до"><option value="">До года</option></select></div></label><label>Цена, ¥<div class="range-inputs"><input id="priceFrom" type="number" placeholder="от"><input id="priceTo" type="number" placeholder="до"></div></label><label>Тип двигателя<select id="fuelFilter"><option value="">Любой</option><option>Бензин</option><option>Гибрид</option><option>Электро</option></select></label><label>Привод<select id="driveFilter"><option value="">Любой</option><option>Передний</option><option>Полный</option></select></label><button class="button filter-submit" id="applyFilters">Показать автомобили</button></aside><section class="cars-area"><div class="catalog-tools"><label class="search">⌕ <input id="search" placeholder="Поиск по марке или модели"></label><button class="button search-btn" id="applySearch">Найти</button><span class="sort-label">Сортировка</span><select id="sort"><option value="default">По умолчанию</option><option value="cheap">Сначала дешевле</option><option value="expensive">Сначала дороже</option><option value="new">Сначала новее</option></select></div><p id="resultCount" class="result-count"></p><div class="car-grid" id="carGrid"></div><p class="fineprint">Цены в рублях указаны ориентировочно по курсу ЦБ РФ. Оплата через ВТБ рассчитывается по курсу банка на дату перевода.</p></section></div></main>
-<footer id="contacts"><div class="footer-main"><a class="brand" href="index.html"><img class="brand-logo" src="assets/logo.png" alt="XUNAN Automobile Trade"></a><div class="footer-contact"><b>Контакты</b><div class="footer-phones"><span>Телефон:</span><a href="tel:+79830096666">+7 983 009-66-66</a><a href="tel:+79538740033">+7 953 874-00-33</a></div><span><a href="https://t.me/xunanautotrade" target="_blank" rel="noreferrer">Telegram</a> · <a href="https://max.ru/join/DEZvsnxLBWOvJJHh7o0DL7q_ZMvHXa1GD6vDbuG4IHg" target="_blank" rel="noreferrer">MAX</a></span><span>Офис: Новосибирск, пр. Карла Маркса, 30</span></div><div class="footer-nav"><b>Разделы сайта</b><a href="index.html">Главная</a><a href="catalog.html">Каталог автомобилей</a><a href="order.html">Машина на заказ</a><a href="calculator.html">Расчёт стоимости</a><a href="index.html#about">О компании</a><a href="index.html#contacts">Контакты</a></div></div><div class="privacy-footer-link"><a href="privacy.html">Политика обработки персональных данных</a></div></footer><script src="cars-data.js?v=vw-14"></script><script src="site-config.js"></script><script src="app.js?v=all-galleries-20261101"></script><script src="back-to-top.js?v=5" defer></script></body></html>
+<main class="catalog-page section-wrap"><div class="crumb"><a href="index.html">Главная</a>　/　Каталог</div><div class="section-heading"><div><h2>Каталог автомобилей</h2></div></div><div class="catalog-layout"><button class="button button-outline catalog-filter-toggle" type="button" aria-controls="catalogFilters" aria-expanded="false" hidden>Фильтры <span aria-hidden="true">+</span></button><aside class="filters" id="catalogFilters"><h3>Фильтры <button id="resetFilters" class="reset">Сбросить</button></h3><label>Марка<select id="brandFilter"><option value="">Все марки</option></select></label><label>Год выпуска<div class="range-inputs"><select id="yearFrom" aria-label="Год выпуска от"><option value="">От года</option></select><select id="yearTo" aria-label="Год выпуска до"><option value="">До года</option></select></div></label><label>Цена, ¥<div class="range-inputs"><input id="priceFrom" type="number" placeholder="от"><input id="priceTo" type="number" placeholder="до"></div></label><label>Тип двигателя<select id="fuelFilter"><option value="">Любой</option><option>Бензин</option><option>Гибрид</option><option>Электро</option></select></label><label>Привод<select id="driveFilter"><option value="">Любой</option><option>Передний</option><option>Полный</option></select></label><button class="button filter-submit" id="applyFilters">Показать автомобили</button></aside><section class="cars-area"><div class="catalog-tools"><label class="search">⌕ <input id="search" placeholder="Поиск по марке или модели"></label><button class="button search-btn" id="applySearch">Найти</button><span class="sort-label">Сортировка</span><select id="sort"><option value="default">По умолчанию</option><option value="cheap">Сначала дешевле</option><option value="expensive">Сначала дороже</option><option value="new">Сначала новее</option></select></div><p id="resultCount" class="result-count"></p><div class="car-grid" id="carGrid"></div><p class="fineprint">Цены в рублях указаны ориентировочно по курсу ЦБ РФ. Оплата через ВТБ рассчитывается по курсу банка на дату перевода.</p></section></div></main>
+<footer id="contacts"><div class="footer-main"><a class="brand" href="index.html"><img class="brand-logo" src="assets/logo.png" alt="XUNAN Automobile Trade"></a><div class="footer-contact"><b>Контакты</b><div class="footer-phones"><span>Телефон:</span><a href="tel:+79830096666">+7 983 009-66-66</a><a href="tel:+79538740033">+7 953 874-00-33</a></div><span><a href="https://t.me/xunanautotrade" target="_blank" rel="noreferrer">Telegram</a> · <a href="https://max.ru/join/DEZvsnxLBWOvJJHh7o0DL7q_ZMvHXa1GD6vDbuG4IHg" target="_blank" rel="noreferrer">MAX</a></span><span>Офис: Новосибирск, пр. Карла Маркса, 30</span></div><div class="footer-nav"><b>Разделы сайта</b><a href="index.html">Главная</a><a href="catalog.html">Каталог автомобилей</a><a href="order.html">Машина на заказ</a><a href="calculator.html">Расчёт стоимости</a><a href="index.html#about">О компании</a><a href="index.html#contacts">Контакты</a></div></div><div class="privacy-footer-link"><a href="privacy.html">Политика обработки персональных данных</a></div></footer><script src="cars-data.js?v=vw-14"></script><script src="site-config.js"></script><script src="app.js?v=all-galleries-20261101"></script><script src="back-to-top.js?v=5" defer></script><script>
+  const filterToggle = document.querySelector('.catalog-filter-toggle');
+  filterToggle.hidden = false;
+  filterToggle.addEventListener('click', () => {
+    const expanded = filterToggle.getAttribute('aria-expanded') === 'true';
+    filterToggle.setAttribute('aria-expanded', String(!expanded));
+    filterToggle.lastElementChild.textContent = expanded ? '+' : '−';
+  });
+</script></body></html>
