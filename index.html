@@ -112,7 +112,7 @@
   #process .process-steps article {
     position: relative;
     display: grid;
-    grid-template-columns: 28px 38px minmax(0, 1fr);
+    grid-template-columns: 38px minmax(0, 1fr);
     grid-template-rows: auto auto;
     gap: 3px 10px;
     align-content: start;
@@ -127,33 +127,22 @@
   #process .process-steps article::before {
     content: "";
     position: absolute;
-    inset: 0 auto 0 13px;
+    inset: 0 auto 0 18px;
     width: 2px;
     background: #e9a4a4;
   }
-  #process .process-steps article:first-child::before { top: 26px; }
-  #process .process-steps article:last-child::before { bottom: auto; height: 26px; }
+  #process .process-steps article:first-child::before { top: 31px; }
+  #process .process-steps article:last-child::before { bottom: auto; height: 31px; }
   #process .process-steps article:not(:last-child)::after {
     content: "";
     position: absolute;
-    inset: auto 0 0 38px;
+    inset: auto 0 0 48px;
     border-bottom: 1px solid #edd4d4;
   }
-  #process .process-steps article > b {
-    position: relative;
-    inset: auto;
-    z-index: 1;
-    grid-row: 1 / span 2;
-    display: grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--red);
-    color: #fff;
-    font-size: 11px;
-  }
+  #process .process-steps article > b { display: none; }
   #process .step-icon {
+    position: relative;
+    z-index: 1;
     grid-row: 1 / span 2;
     width: 38px;
     height: 38px;
@@ -165,8 +154,8 @@
   #process .step-icon svg { width: 23px; height: 23px; fill: var(--red); }
   #process .step-icon .icon-cutout { stroke: #fce8e8; }
   #process .step-icon .icon-cutout-fill { fill: #fce8e8; }
-  #process .process-steps h3 { grid-column: 3; font-size: 15px; margin: 0; }
-  #process .process-steps p { grid-column: 3; font-size: 13px; line-height: 1.4; }
+  #process .process-steps h3 { grid-column: 2; font-size: 15px; margin: 0; }
+  #process .process-steps p { grid-column: 2; font-size: 13px; line-height: 1.4; }
   #process .process-steps .process-full-copy { display: none; }
   #process .process-steps .process-mobile-copy { display: block; }
   footer .footer-contact { grid-row: 1; grid-column: 1 / -1; }
