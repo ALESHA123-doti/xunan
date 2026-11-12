@@ -19,7 +19,7 @@
 }
 #contacts { scroll-margin-top: 110px; }
 @media (max-width: 700px) {
-  #home.hero { height: auto; min-height: 0; }
+  #home.hero { display: grid; height: auto; min-height: 0; }
   #home .hero-slide {
     position: relative;
     inset: auto;
@@ -27,7 +27,13 @@
     padding-bottom: 55px;
     isolation: isolate;
   }
-  #home .hero-slide.active { display: flex; flex-direction: column; }
+  #home .hero-slide {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+  }
+  #home .hero-slide.active { visibility: visible; }
   #home .hero-copy {
     position: relative;
     width: 100%;
