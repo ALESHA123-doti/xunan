@@ -2003,3 +2003,16 @@ body {font-size:18px;line-height:1.6}
   }
   header.topbar > nav { top: 100%; }
 }
+
+/* Keep the phone footer focused on contact information. */
+@media (max-width: 700px) {
+  footer .footer-main > .footer-nav,
+  footer > .footer-bottom { display: none; }
+  footer .footer-main.footer-main {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  footer .footer-main > .brand { grid-area: 1 / 1; }
+  footer .footer-main > .footer-contact { grid-area: 2 / 1; }
+}
