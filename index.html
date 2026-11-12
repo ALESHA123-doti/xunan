@@ -61,25 +61,7 @@
   #home .slide-arrow,
   #home .slide-dots,
   #home .slide-counter { display: none; }
-  #home + .benefits {
-    width: calc(100% - 20px);
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding: 8px;
-    gap: 8px;
-  }
-  #home + .benefits article {
-    min-width: 0;
-    padding: 10px 8px;
-    gap: 6px;
-  }
-  #home + .benefits .benefit-icon {
-    width: clamp(26px, 8vw, 38px);
-    height: clamp(26px, 8vw, 38px);
-    padding: 5px;
-  }
-  #home + .benefits article > div { min-width: 0; }
-  #home + .benefits b { font-size: clamp(11px, 3.2vw, 15px); overflow-wrap: anywhere; }
-  #home + .benefits small { font-size: clamp(11px, 3vw, 13px); }
+  #home + .benefits { display: none; }
   #about .about-facts { display: none; }
   #about .about-pick-button {
     display: flex;
