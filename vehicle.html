@@ -2,8 +2,9 @@
 @media (max-width: 700px) {
   .vehicle-page .detail-grid { gap: 20px; }
   .vehicle-page .vehicle-gallery-column { display: contents; }
-  .vehicle-page .detail-info { order: 0; min-width: 0; }
-  .vehicle-page .vehicle-gallery { order: 1; min-width: 0; }
+  .vehicle-page .detail-info { order: 1; min-width: 0; display: flex; flex-direction: column; }
+  .vehicle-page .detail-info > :is(.detail-price, .vehicle-actions, .disclaimer) { order: 1; }
+  .vehicle-page .vehicle-gallery { order: 0; min-width: 0; }
   .vehicle-page .vehicle-detail-tabs { order: 2; min-width: 0; }
   .vehicle-page .detail-price {
     display: grid;
