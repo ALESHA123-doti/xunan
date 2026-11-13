@@ -69,10 +69,13 @@ function setPhoto(n){
   }
 }
 
+main.setAttribute('fetchpriority', 'high');
+setPhoto(1);
+
 $('#galleryThumbs').innerHTML=Array.from({length:photoCount},(_,i)=>{
   const n=i+1;
-  return `<button type="button" aria-label="Открыть фото ${n}" title="Фото ${n}">
-    <img src="${photoPath(n)}" alt="" loading="lazy" draggable="false">
+  return `<button type="button" class="${n===photo ? 'active' : ''}" aria-label="Открыть фото ${n}" title="Фото ${n}">
+    <img src="${photoPath(n)}" alt="" loading="lazy" fetchpriority="low" decoding="async" draggable="false">
     <span class="thumb-number">${String(n).padStart(2,'0')}</span>
   </button>`;
 }).join('');
@@ -108,7 +111,6 @@ lightbox.onclick=e=>{
   if(e.target===lightbox)lightbox.classList.remove('open');
 };
 
-setPhoto(1);
 
 window.XUNAN_RATE_READY.then(rate=>$('#carRub').textContent=`≈ ${fmt(Math.round(car.priceCNY*rate.value))} ₽ по курсу ЦБ*`);
 
