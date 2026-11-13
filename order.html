@@ -4,7 +4,84 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#AF0505"><title>Машина на заказ — XUNAN</title>
 <link rel="icon" href="assets/favicon.ico"><link rel="stylesheet" href="styles.css?v=mobile-header-7d81044">
-<link rel="stylesheet" href="privacy.css?v=6"></head>
+<link rel="stylesheet" href="privacy.css?v=6">
+<style>
+  .order-form.yandex-order {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto 44px;
+    padding: 18px 20px 14px;
+    border: 1px solid #eae4e4;
+    border-top: 3px solid #af0505;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 8px 26px #2e161609;
+    scroll-margin-top: 95px;
+  }
+  .yandex-order iframe { display: block; width: 100%; border: 0; }
+  .yandex-order .form-fallback { text-align: center; margin: 12px 0 0; font-size: 13px; }
+  .yandex-order .form-fallback a { color: #7f2727; text-underline-offset: 3px; }
+  .order-side-art { display: none; }
+  @media (min-width: 1100px) {
+    .order-preview-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 720px) minmax(0, 1fr);
+      align-items: start;
+      gap: 12px;
+    }
+    .order-side-art {
+      display: flex;
+      flex-direction: column;
+      align-self: stretch;
+      grid-row: 1;
+      width: 100%;
+      max-width: 380px;
+    }
+    .order-art-connector {
+      flex: 1 0 12px;
+      pointer-events: none;
+      opacity: .38;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M50 0 C50 25 22 25 22 50 S50 75 50 100' fill='none' stroke='%23a83c49' stroke-width='1.4' stroke-dasharray='4 6' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / min(100%, 130px) 100% no-repeat;
+    }
+    .order-side-art--right > .order-art-connector { transform: scaleX(-1); }
+    .order-side-art > span {
+      display: block;
+      flex: none;
+      aspect-ratio: 1;
+      background: url("assets/images/order-side-art-six.webp") no-repeat;
+      background-size: 200% 300%;
+      mask-image: linear-gradient(transparent, #000 8%, #000 92%, transparent);
+    }
+    .order-side-art--left { grid-column: 1; justify-self: end; }
+    .order-side-art--right { grid-column: 3; }
+    .order-side-art--left > span { background-position-x: left; }
+    .order-side-art--right > span { background-position-x: right; }
+    .order-side-art > span:nth-of-type(1) { background-position-y: top; }
+    .order-side-art > span:nth-of-type(2) { background-position-y: center; }
+    .order-side-art > span:nth-of-type(3) { background-position-y: bottom; }
+    .order-side-art > .order-art-extra {
+      background-image: url("assets/images/order-side-art-extra.webp");
+      background-size: 200% 100%;
+    }
+    .order-side-art--right > .order-art-extra:last-child {
+      -webkit-mask-image: radial-gradient(ellipse 50% 43% at center, #000 50%, #0009 74%, transparent 100%);
+      mask-image: radial-gradient(ellipse 50% 43% at center, #000 50%, #0009 74%, transparent 100%);
+    }
+    .order-side-art--left > .order-art-new {
+      background: url("assets/images/order-side-art-left-new.webp") left center / 200% 100% no-repeat;
+    }
+    .order-side-art--left > .order-art-new:last-child { background-position: right center; }
+    .order-side-art--left > .order-art-loading {
+      background: url("assets/images/order-side-art-loading-v2.webp") center / contain no-repeat;
+    }
+    .order-preview-layout > .yandex-order { grid-area: 1 / 2; }
+  }
+  @media (max-width: 700px) {
+    .order-form.yandex-order { padding: 8px 0 12px; margin-bottom: 28px; }
+    .yandex-order .form-fallback { padding-inline: 12px; }
+  }
+</style></head>
 <body>
 <header class="topbar">
 <a class="brand" href="index.html" aria-label="XUNAN — главная"><img class="brand-logo" src="assets/logo.png" alt="XUNAN Automobile Trade"></a>
@@ -20,47 +97,32 @@
 <h1 style="text-align: center">Расскажите, что ищете</h1>
 <div class="about-note"><b>Важно об ограничении мощности</b><span>Мы перевозим автомобили только с мощностью двигателя до 160 л. с. включительно. Пожалуйста, учитывайте это при выборе автомобиля.</span></div>
 </section>
-<form id="orderForm" class="order-form">
-<section class="form-section">
-<div class="form-section-heading"><span>01</span><div><h2>Как с вами связаться</h2><p>Выберите канал и укажите номер, адрес или имя в этом канале.</p></div></div>
-<div class="form-grid">
-<label>Канал связи <em>обязательно</em>
-<select id="contactMethod" name="contactMethod" required>
-<option value="">Выберите канал</option><option value="Телефон">Телефон</option><option value="Telegram">Telegram</option><option value="WhatsApp">WhatsApp</option><option value="MAX">MAX</option><option value="Электронная почта">Электронная почта</option><option value="Другое">Другое</option>
-</select></label>
-<label id="contactValueLabel">Ваш контакт <em>обязательно</em>
-<input id="contactValue" name="contactValue" required placeholder="Сначала выберите канал связи">
-</label>
-<label>Как к вам обращаться <small>необязательно</small><input name="name" placeholder="Имя"></label>
+<div class="order-preview-layout">
+<div class="order-side-art order-side-art--left" aria-hidden="true">
+  <span></span><div class="order-art-connector"></div>
+  <span></span><div class="order-art-connector"></div>
+  <span class="order-art-loading"></span><div class="order-art-connector"></div>
+  <span class="order-art-new"></span>
 </div>
+<section id="orderForm" class="order-form yandex-order">
+  <script src="https://forms.yandex.ru/_static/embed.js"></script>
+  <iframe src="https://forms.yandex.ru/u/6af16031aeb352f38e52998f?iframe=1"
+    name="ya-form-6af16031aeb352f38e52998f" title="Заявка на подбор автомобиля"
+    width="100%" height="950"></iframe>
+  <p class="form-fallback"><a href="https://forms.yandex.ru/u/6af16031aeb352f38e52998f/" target="_blank" rel="noopener">Открыть анкету в отдельной вкладке</a></p>
 </section>
-<section class="form-section">
-<div class="form-section-heading"><span>02</span><div><h2>Пожелания к автомобилю</h2><p>Укажите то, что уже знаете. Любое поле можно оставить пустым.</p></div></div>
-<div class="form-grid">
-<label>Марка<select name="make"><option value="">Любая марка</option><option>Audi</option><option>BMW</option><option>Honda</option><option>Kia</option><option>Mazda</option><option>Toyota</option><option>Volkswagen</option><option>Другая</option></select></label>
-<label>Модель<input name="model" placeholder="Например, Audi Q3"></label>
-<label>Цвет<input name="color" placeholder="Любой"></label>
-<label>Тип кузова<select name="body"><option value="">Любой</option><option>Седан</option><option>Кроссовер / SUV</option><option>Хэтчбек</option><option>Универсал</option><option>Минивэн</option><option>Другой</option></select></label>
-<label>Год выпуска от<input name="yearFrom" type="number" min="1990" max="2035" placeholder="Например, 2021"></label>
-<label>Год выпуска до<input name="yearTo" type="number" min="1990" max="2035" placeholder="Например, 2024"></label>
-<label>Бюджет от, ¥<input name="budgetFrom" type="number" min="0" step="1000" placeholder="Необязательно"></label>
-<label>Бюджет до, ¥<input name="budgetTo" type="number" min="0" step="1000" placeholder="Необязательно"></label>
-<label>Тип двигателя<select name="engineType"><option value="">Любой</option><option>Бензин</option><option>Гибрид</option><option>Электро</option><option>Дизель</option></select></label>
-<label>Привод<select name="drive"><option value="">Любой</option><option>Передний</option><option>Задний</option><option>Полный</option></select></label>
-<label>Коробка передач<select name="transmission"><option value="">Любая</option><option>Автомат</option><option>Робот</option><option>Вариатор</option><option>Механика</option></select></label>
-<label>Максимальный пробег, км<input name="mileageMax" type="number" min="0" step="1000" placeholder="Например, 50 000"></label>
+<div class="order-side-art order-side-art--right" aria-hidden="true">
+  <span></span><div class="order-art-connector"></div>
+  <span></span><div class="order-art-connector"></div>
+  <span></span><div class="order-art-connector"></div>
+  <span class="order-art-extra"></span>
 </div>
-<label class="wide-field">Что ещё важно учесть?<small>необязательно</small><textarea name="comment" rows="4" placeholder="Комплектация, желаемые опции, сроки или другие пожелания"></textarea></label>
-</section>
-<div class="order-submit">
-<div class="privacy-consent"><input type="checkbox" id="orderPrivacyConsent" name="personalDataConsent" value="yes" required><label for="orderPrivacyConsent">Отправляю данную форму я даю согласие на <a href="privacy.html" target="_blank" rel="noopener">обработку персональных данных</a></label></div>
-<button class="button" type="submit">Отправить заявку</button>
-<p>Параметры автомобиля можно не указывать. Для заявки укажите канал связи и контакт для ответа, а также отметьте согласие на обработку персональных данных.</p>
-<div id="orderStatus" role="status" aria-live="polite"></div>
 </div>
-</form>
 </main>
 <footer id="contacts"><div class="footer-main"><a class="brand" href="index.html"><img class="brand-logo" src="assets/logo.png" alt="XUNAN Automobile Trade"></a><div class="footer-contact"><b>Контакты</b><div class="footer-phones"><span>Телефон:</span><a href="tel:+79830096666">+7 983 009-66-66</a><a href="tel:+79538740033">+7 953 874-00-33</a></div><span><a href="https://t.me/xunanautotrade" target="_blank" rel="noreferrer">Telegram</a> · <a href="https://max.ru/join/DEZvsnxLBWOvJJHh7o0DL7q_ZMvHXa1GD6vDbuG4IHg" target="_blank" rel="noreferrer">MAX</a></span><span>Адрес: Новосибирск, пр. Карла Маркса, 30, офис 306</span></div><div class="footer-nav"><b>Разделы сайта</b><a href="index.html">Главная</a><a href="catalog.html">Каталог автомобилей</a><a href="order.html">Машина на заказ</a><a href="calculator.html">Расчёт стоимости</a><a href="index.html#about">О компании</a><a href="index.html#contacts">Контакты</a></div></div><div class="privacy-footer-link"><a href="privacy.html">Политика обработки персональных данных</a></div></footer>
-<script src="site-config.js"></script><script src="order.js?v=phone-order-20261103"></script>
+<script src="site-config.js"></script><script>
+const menuButton = document.querySelector('.menu-toggle');
+menuButton.addEventListener('click', () => document.querySelector('.topbar nav').classList.toggle('open'));
+</script>
 <script src="back-to-top.js?v=5" defer></script></body>
 </html>
