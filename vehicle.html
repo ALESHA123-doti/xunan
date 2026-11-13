@@ -6,6 +6,41 @@
   .vehicle-page .detail-info > :is(.detail-price, .vehicle-actions, .disclaimer) { order: 1; }
   .vehicle-page .vehicle-gallery { order: 0; min-width: 0; }
   .vehicle-page .vehicle-detail-tabs { order: 2; min-width: 0; }
+  .vehicle-page #detailTabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 0;
+    border: 0;
+  }
+  .vehicle-page #detailTabs button {
+    min-width: 0;
+    min-height: 44px;
+    padding: 8px 4px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: #f8f8f8;
+    font-size: clamp(13px, 3.6vw, 15px);
+    overflow-wrap: anywhere;
+  }
+  .vehicle-page #detailTabs button.active {
+    border-color: var(--red);
+    background: #fff0f0;
+    color: var(--red);
+    font-weight: 700;
+  }
+  .vehicle-page #detailPanel {
+    height: auto;
+    min-height: 0;
+    margin: 12px 0 0;
+    padding: 16px 14px;
+    overflow: visible;
+    scrollbar-gutter: auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+  .vehicle-page #detailPanel h3 { font-size: 18px; margin: 0 0 8px; }
+  .vehicle-page #detailPanel p { margin: 0; }
   .vehicle-page .detail-price {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
