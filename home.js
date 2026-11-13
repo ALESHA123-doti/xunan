@@ -1,6 +1,14 @@
 const slides=[...document.querySelectorAll('.hero-slide')],dots=[...document.querySelectorAll('.slide-dots button')],counter=document.querySelector('.slide-counter');
 let current=0;
-function showSlide(i){current=(i+slides.length)%slides.length;slides.forEach((s,n)=>s.classList.toggle('active',n===current));dots.forEach((d,n)=>d.classList.toggle('active',n===current));counter.textContent='0'+(current+1)+' / 03'}
+function showSlide(i){current=(i+slides.length)%slides.length;
+  if (!matchMedia('(max-width: 700px)').matches) {
+    const photo = slides[current].querySelector('img[data-src]');
+    if (photo) {
+      photo.src = photo.dataset.src;
+      photo.removeAttribute('data-src');
+    }
+  }
+  slides.forEach((s,n)=>s.classList.toggle('active',n===current));dots.forEach((d,n)=>d.classList.toggle('active',n===current));counter.textContent='0'+(current+1)+' / 03'}
 document.querySelector('.slide-arrow.prev').onclick=()=>showSlide(current-1);
 document.querySelector('.slide-arrow.next').onclick=()=>showSlide(current+1);
 dots.forEach((d,n)=>d.onclick=()=>showSlide(n));
@@ -25,8 +33,13 @@ function renderFeatured(rate){
 }
 featured?.addEventListener('error',()=>{},true);
 function addPhotoFallbacks(){document.querySelectorAll('.car-image img').forEach(img=>img.onerror=()=>{img.remove();const link=img.parentElement;link.classList.add('no-photo');link.textContent='Фото скоро появится'});}
-window.XUNAN_RATE_READY.then(renderFeatured);
-window.addEventListener('xunan-rate-updated',event=>renderFeatured(event.detail));
+renderFeatured(window.XUNAN_RATE);
+window.addEventListener('xunan-rate-updated', event => {
+  const cars = window.XUNAN_CARS || [];
+  featured?.querySelectorAll('.rub-price').forEach((price, index) => {
+    price.textContent = '≈ ' + fmt(Math.round(cars[index].priceCNY * event.detail.value)) + ' ₽ по курсу ЦБ';
+  });
+});
 const menu=document.querySelector('.menu-toggle');
 if(menu)menu.onclick=()=>document.querySelector('.topbar nav').classList.toggle('open');
 document.querySelectorAll('.topbar nav a').forEach(a=>a.onclick=()=>document.querySelector('.topbar nav').classList.remove('open'));
