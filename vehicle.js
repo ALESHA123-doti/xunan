@@ -75,7 +75,10 @@ setPhoto(1);
 $('#galleryThumbs').innerHTML=Array.from({length:photoCount},(_,i)=>{
   const n=i+1;
   return `<button type="button" class="${n===photo ? 'active' : ''}" aria-label="Открыть фото ${n}" title="Фото ${n}">
-    <img src="${photoPath(n)}" alt="" loading="lazy" fetchpriority="low" decoding="async" draggable="false">
+    <svg width="160" height="112" viewBox="${i%5*160} ${Math.floor(i/5)*112} 160 112" preserveAspectRatio="xMidYMid slice"
+      aria-hidden="true" style="display:block;width:100%;height:100%;pointer-events:none">
+      <image href="assets/gallery-thumbs/${car.id}.webp" width="800" height="448"></image>
+    </svg>
     <span class="thumb-number">${String(n).padStart(2,'0')}</span>
   </button>`;
 }).join('');
@@ -87,10 +90,15 @@ document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>{
     setPhoto(i+1);
   });
 
-  const image=b.querySelector('img');
-  image.addEventListener('error',()=>{
-    image.remove();
-    b.insertAdjacentHTML('afterbegin',`<span style="display:grid;place-items:center;width:100%;height:100%;font-size:11px;color:#626a73;pointer-events:none">${String(i+1).padStart(2,'0')}</span>`);
+  const tile=b.querySelector('svg');
+  tile.querySelector('image').addEventListener('error',()=>{
+    const image=document.createElement('img');
+    image.alt='';
+    image.loading='lazy';
+    image.fetchPriority='low';
+    image.addEventListener('error',()=>image.remove(),{once:true});
+    tile.replaceWith(image);
+    image.src=photoPath(i+1);
   },{once:true});
 });
 
