@@ -1,5 +1,53 @@
 <!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Расчёт стоимости автомобиля — XUNAN</title><link rel="icon" href="assets/favicon.ico"><link rel="stylesheet" href="styles.css?v=mobile-header-7d81044"><link rel="stylesheet" href="privacy.css?v=6"><style>
 @media (max-width: 700px) {
+  .cost-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .cost-layout > article {
+    min-width: 0;
+    padding: 14px clamp(12px, 4vw, 20px);
+  }
+  .cost-car > b { font-size: 18px; }
+  .cost-car .calc-field { font-size: 15px; }
+  .cost-car .calc-field input,
+  .cost-car .calc-field select { min-height: 44px; font-size: 16px; }
+  .cost-breakdown h3 { font-size: 20px; }
+  .cost-breakdown :is(.cost-row, .broker-row, .total) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    align-items: start;
+    gap: 4px 12px;
+    padding-block: 12px;
+  }
+  .cost-breakdown :is(.cost-row, .broker-row, .total) > span {
+    font-size: 15px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+  .cost-breakdown :is(.cost-row, .broker-row, .total) > span small {
+    display: block;
+    margin-top: 3px;
+    font-size: 13px;
+  }
+  .cost-breakdown :is(.cost-row, .broker-row, .total) > b {
+    grid-area: 1 / 2;
+    font-size: 16px;
+    line-height: 1.3;
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .cost-breakdown .broker-row > .switch {
+    grid-area: 2 / 1;
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    min-height: 36px;
+  }
+  .cost-breakdown .total > b { font-size: clamp(19px, 5.5vw, 25px); }
+  .cost-breakdown .notice,
+  .cost-breakdown .fineprint { font-size: 14px; line-height: 1.5; }
   .notice.customs-notice { text-align: justify; }
 }
 </style></head><body>
