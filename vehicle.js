@@ -120,12 +120,17 @@ window.addEventListener("xunan-rate-updated",event=>{
 
 const contactDialog=document.querySelector("#contactDialog");
 const callbackDialog=document.querySelector("#callbackDialog");
-const callbackForm=document.querySelector("#callbackForm");
+const callbackFrame = document.querySelector("#callbackFrame");
+const callbackUrl = new URL("https://forms.yandex.ru/u/6af6d0ea6f1ca4371c70d257");
+callbackUrl.searchParams.set("iframe", "1");
+callbackUrl.searchParams.set("car", car.title);
+callbackFrame.src = callbackUrl.href;
+callbackUrl.searchParams.delete("iframe");
+document.querySelector("#callbackFormLink").href = callbackUrl.href;
 
 document.querySelector("#contactNow").addEventListener("click",()=>contactDialog.showModal());
 document.querySelector("#requestCallback").addEventListener("click",()=>{
   callbackDialog.showModal();
-  document.querySelector("#callbackPhone").focus({preventScroll:true});
 });
 document.querySelector("#contactDialogClose").addEventListener("click",()=>contactDialog.close());
 document.querySelector("#callbackDialogClose").addEventListener("click",()=>callbackDialog.close());
@@ -136,45 +141,3 @@ callbackDialog.addEventListener("click",event=>{
   if(event.target===callbackDialog)callbackDialog.close();
 });
 
-callbackForm.addEventListener("submit",async event=>{
-  event.preventDefault();
-  const button=callbackForm.querySelector('button[type="submit"]');
-  if(button&&button.disabled)return;
-  if(!callbackForm.reportValidity())return;
-
-  const status=document.querySelector("#callbackStatus");
-  const recipient=window.XUNAN_CONFIG&&window.XUNAN_CONFIG.leadEmail;
-  if(!recipient){
-    status.textContent="Не удалось отправить заявку. Свяжитесь с нами по телефону +7 983 009-66-66.";
-    return;
-  }
-
-  const formData=new FormData(callbackForm);
-  const data=new FormData();
-  data.set("Автомобиль",car.title);
-  data.set("Телефон",String(formData.get("phone")||"").trim());
-  if(String(formData.get("name")||"").trim())data.set("Имя",String(formData.get("name")).trim());
-  if(String(formData.get("comment")||"").trim())data.set("Комментарий",String(formData.get("comment")).trim());
-  data.set("_subject","Заявка по автомобилю — XUNAN");
-  data.set("_template","table");
-  data.set("_honey","");
-
-  const originalText=button?button.textContent:"";
-  if(button){button.disabled=true;button.textContent="Отправляем…"}
-  status.textContent="Отправляем заявку…";
-  try{
-    const response=await fetch("https://formsubmit.co/ajax/"+recipient,{
-      method:"POST",headers:{"Accept":"application/json"},body:data
-    });
-    const result=await response.json();
-    if(!response.ok || !(result&&(
-      result.success===true || result.success==="true"
-    )))throw new Error("Отправка не подтверждена");
-    status.textContent="Спасибо! Заявка отправлена. Мы свяжемся с вами";
-    callbackForm.reset();
-  }catch(error){
-    status.textContent="Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь с нами по телефону +7 983 009-66-66.";
-  }finally{
-    if(button){button.disabled=false;button.textContent=originalText}
-  }
-});
