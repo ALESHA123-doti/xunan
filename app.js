@@ -37,7 +37,7 @@ if (grid) {
     if (sort === 'new') list.sort((a, b) => (b.year || 0) - (a.year || 0));
     $('#resultCount').textContent = `Найдено: ${list.length} автомобилей из ${cars.length}`;
     const rate = window.XUNAN_RATE.value;
-    grid.innerHTML = list.map((car, index) => `<article class="car-card"><div class="car-image"><img src="assets/cars/${car.id}/cover-640.webp" alt="${car.title}, внешний вид" ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'}></div><div class="car-content"><h3>${car.title}</h3><div class="car-trim">${normalizeEngineLabel(car.trim)}</div><div class="car-meta">${car.color}　·　${fmt(car.mileage)} км　·　${normalizeEngineLabel(car.engine)}</div><strong class="car-price">${fmt(car.priceCNY)} ¥</strong><small class="rub-price" data-price-cny="${car.priceCNY}">≈ ${fmt(Math.round(car.priceCNY * rate))} ₽ по курсу ЦБ*</small><a class="button button-outline" href="vehicle.html?id=${car.id}">Подробнее</a></div></article>`).join('') || '<p class="muted">По выбранным условиям автомобили не найдены.</p>';
+    grid.innerHTML = list.map((car, index) => `<article class="car-card"><div class="car-image"><img src="assets/cars/${car.id}/cover-640.webp" alt="${car.title}, внешний вид" ${index === 0 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'}></div><div class="car-content"><h3>${car.title}</h3><div class="car-trim">${normalizeEngineLabel(car.trim)}</div><div class="car-meta">${car.color}　·　${fmt(car.mileage)} км　·　${normalizeEngineLabel(car.engine)}</div><strong class="car-price">${fmt(car.priceCNY)} ¥</strong><small class="rub-price" data-price-cny="${car.priceCNY}">${formatCnyRubPrice(car.priceCNY, rate, '*')}</small><a class="button button-outline" href="vehicle.html?id=${car.id}">Подробнее</a></div></article>`).join('') || '<p class="muted">По выбранным условиям автомобили не найдены.</p>';
     grid.querySelectorAll('.car-image img').forEach(img => {
       img.onerror = () => {
         const placeholder = document.createElement('span');
@@ -50,7 +50,7 @@ if (grid) {
   render();
   window.addEventListener('xunan-rate-updated', event => {
     grid.querySelectorAll('.rub-price').forEach(price => {
-      price.textContent = `≈ ${fmt(Math.round(Number(price.dataset.priceCny) * event.detail.value))} ₽ по курсу ЦБ*`;
+      price.textContent = formatCnyRubPrice(Number(price.dataset.priceCny), event.detail.value, '*');
     });
   });
   ['brandFilter', 'fuelFilter', 'driveFilter', 'yearFrom', 'yearTo', 'priceFrom', 'priceTo', 'sort'].forEach(id => $(`#${id}`).addEventListener('change', render));

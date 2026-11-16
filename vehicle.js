@@ -30,7 +30,7 @@ Object.assign(details,{
 });
 const d=details[id]||{engine:`${car.engine}${car.power?`, ${car.power}`:''}`,transmission:'Уточняется по данным автомобиля',equipment:[car.sourceTrim,`Цвет: ${car.color}`,`Пробег: ${fmt(car.mileage)} км`,`Двигатель: ${car.engine} · ${car.power}`],safety:['Проверенные данные и документы предоставляются до согласования покупки.'],condition:car.condition||'Сведения о состоянии уточняются по результатам осмотра.',description:`${car.title}. Двигатель: ${car.engine}. Пробег: ${fmt(car.mileage)} км.`};
 $('#carTitle').textContent=car.title;$('#crumbTitle').textContent=car.title;$('#carTrim').textContent=car.trim;$('#carMeta').textContent=`${car.color}　·　${car.release}　·　${fmt(car.mileage)} км　·　${car.engine}　·　Передний привод`;
-$('#carPrice').textContent=`${fmt(car.priceCNY)} ¥`;$('#calcLink').href=`calculator.html?id=${id}`;$('#carRub').textContent=`≈ ${fmt(Math.round(car.priceCNY*window.XUNAN_RATE.value))} ₽ по курсу ЦБ*`;
+$('#carPrice').textContent=`${fmt(car.priceCNY)} ¥`;$('#calcLink').href=`calculator.html?id=${id}`;$('#carRub').textContent=formatCnyRubPrice(car.priceCNY, window.XUNAN_RATE.value, '*');
 const specs=[['Номер кузова',car.bodyNumber||'Уточняется'],['Дата выпуска',car.release],['Двигатель',d.engine],['Коробка передач',d.transmission],['Привод','Передний'],['Цвет',car.color],['Пробег',`${fmt(car.mileage)} км`],['Состояние',car.condition||'Уточняется']];$('#carSpecs').innerHTML=specs.map(([k,v])=>`<div>${k}<b>${v}</b></div>`).join('');
 const panel=$('#detailPanel');function showTab(tab){const title={equipment:'Комплектация',safety:'Безопасность',condition:'Состояние',description:'Описание'}[tab];panel.innerHTML=`<h3>${title}</h3>`;if(tab==='equipment'||tab==='safety'){const entries=(d[tab]||[]).flatMap(item=>String(item).split(/[;；]\s*/)).map(item=>item.trim().replace(/[.!?…]+$/,'')).filter(Boolean);panel.insertAdjacentHTML('beforeend',`<ul class="clean-feature-list">${entries.map(item=>{const text=item.charAt(0).toLocaleUpperCase('ru-RU')+item.slice(1);return `<li>${text}</li>`}).join('')}</ul>`) }else panel.insertAdjacentHTML('beforeend',`<p>${d[tab]||''}</p>`)}
 document.querySelectorAll('#detailTabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#detailTabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');showTab(b.dataset.tab)});showTab('description');
@@ -120,12 +120,10 @@ lightbox.onclick=e=>{
 };
 
 
-window.XUNAN_RATE_READY.then(rate=>$('#carRub').textContent=`≈ ${fmt(Math.round(car.priceCNY*rate.value))} ₽ по курсу ЦБ*`);
-
 window.addEventListener("xunan-rate-updated",event=>{
   const currentId=new URLSearchParams(location.search).get("id");
   const currentCar=window.XUNAN_CARS[Number(currentId)];
-  if(currentCar)document.querySelector("#carRub").textContent="≈ "+fmt(Math.round(currentCar.priceCNY*event.detail.value))+" ₽ по курсу ЦБ";
+  if(currentCar)document.querySelector("#carRub").textContent=formatCnyRubPrice(currentCar.priceCNY, event.detail.value, '*');
 });
 
 const contactDialog=document.querySelector("#contactDialog");

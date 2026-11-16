@@ -2,6 +2,7 @@ const $ = selector => document.querySelector(selector);
 const fmt = value => new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 }).format(value);
 const price = $('#calcPrice');
 const rate = $('#calcRate');
+rate.value = window.XUNAN_RATE.value ?? '';
 const engineSize = $('#calcEngineSize');
 const dutyInput = $('#calcDuty');
 const brokerToggle = $('#brokerToggle');
@@ -32,28 +33,29 @@ dutyInput.textContent = fmt(duties[engineSize.value] ?? duties['1.4']);
 
 function render() {
   const priceCny = Math.max(0, Number(price.value) || 0);
-  const cnyRate = Math.max(0, Number(rate.value) || 0);
+  const cnyRate = Number(rate.value);
+  const hasRate = Number.isFinite(cnyRate) && cnyRate > 0;
   const customsDuty = duties[engineSize.value] ?? duties['1.4'];
   const brokerFee = brokerToggle.checked ? broker : 0;
   const carRub = priceCny * cnyRate;
   const bankFee = carRub * 0.02;
 
-  $('#lineCar').textContent = `${fmt(carRub)} ₽`;
-  $('#lineBank').textContent = `${fmt(bankFee)} ₽`;
+  $('#lineCar').textContent = hasRate ? `${fmt(carRub)} ₽` : '—';
+  $('#lineBank').textContent = hasRate ? `${fmt(bankFee)} ₽` : '—';
   $('#brokerValue').textContent = `${fmt(brokerFee)} ₽`;
   $('#brokerLabel').textContent = brokerFee ? 'с брокером' : 'без брокера';
-  $('#totalValue').textContent = `${fmt(carRub + bankFee + customsDuty + brokerFee)} ₽`;
+  $('#totalValue').textContent = hasRate ? `${fmt(carRub + bankFee + customsDuty + brokerFee)} ₽` : '—';
 }
 
 [price, rate, brokerToggle].forEach(element => element.addEventListener('input', render));
 engineSize.addEventListener('change', applyDutyForEngine);
 window.XUNAN_RATE_READY.then(result => {
-  if (!rate.dataset.manual) rate.value = result.value;
+  if (!rate.dataset.manual) rate.value = result.value ?? '';
   render();
 });
 window.addEventListener('xunan-rate-updated', event => {
   if (!rate.dataset.manual) {
-    rate.value = event.detail.value;
+    rate.value = event.detail.value ?? '';
     render();
   }
 });

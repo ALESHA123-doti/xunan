@@ -28,7 +28,7 @@ function addPhotoFallbacks(){document.querySelectorAll('.car-image img').forEach
 function renderFeatured(rate){
   const cars=window.XUNAN_CARS||[];
   if(!featured)return;
-  featured.innerHTML=cars.slice(0,3).map(c=>'<article class="car-card"><div class="car-image"><a class="car-image-link" href="vehicle.html?id='+c.id+'" aria-label="Открыть '+c.title+'"><img src="assets/cars/'+c.id+'/cover-640.webp" alt="'+c.title+'" loading="lazy"></a></div><div class="car-content"><h3>'+c.title+'</h3><div class="car-trim">'+c.trim+'</div><div class="car-meta">'+c.color+'　·　'+fmt(c.mileage)+' км　·　'+c.engine+'</div><strong class="car-price">'+fmt(c.priceCNY)+' ¥</strong><small class="rub-price">≈ '+fmt(Math.round(c.priceCNY*rate.value))+' ₽ по курсу ЦБ</small><a class="button button-outline" href="vehicle.html?id='+c.id+'">Подробнее</a></div></article>').join('');
+  featured.innerHTML=cars.slice(0,3).map(c=>'<article class="car-card"><div class="car-image"><a class="car-image-link" href="vehicle.html?id='+c.id+'" aria-label="Открыть '+c.title+'"><img src="assets/cars/'+c.id+'/cover-640.webp" alt="'+c.title+'" loading="lazy"></a></div><div class="car-content"><h3>'+c.title+'</h3><div class="car-trim">'+c.trim+'</div><div class="car-meta">'+c.color+'　·　'+fmt(c.mileage)+' км　·　'+c.engine+'</div><strong class="car-price">'+fmt(c.priceCNY)+' ¥</strong><small class="rub-price">'+formatCnyRubPrice(c.priceCNY,rate.value)+'</small><a class="button button-outline" href="vehicle.html?id='+c.id+'">Подробнее</a></div></article>').join('');
   addPhotoFallbacks();
 }
 featured?.addEventListener('error',()=>{},true);
@@ -37,7 +37,7 @@ renderFeatured(window.XUNAN_RATE);
 window.addEventListener('xunan-rate-updated', event => {
   const cars = window.XUNAN_CARS || [];
   featured?.querySelectorAll('.rub-price').forEach((price, index) => {
-    price.textContent = '≈ ' + fmt(Math.round(cars[index].priceCNY * event.detail.value)) + ' ₽ по курсу ЦБ';
+    price.textContent = formatCnyRubPrice(cars[index].priceCNY, event.detail.value);
   });
 });
 const menu=document.querySelector('.menu-toggle');
