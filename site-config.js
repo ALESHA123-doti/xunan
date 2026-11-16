@@ -31,9 +31,11 @@ function paintCnyRate() {
   const { value } = window.XUNAN_RATE;
   const available = validCnyValue(value);
   document.querySelectorAll('#cnyRate').forEach(el => {
+    const bar = el.closest('.currency-bar');
+    if (bar) bar.hidden = !available;
     el.textContent = available
       ? value.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 4 })
-      : 'курс недоступен';
+      : '';
   });
   document.querySelectorAll('#cnyRateDate').forEach(el => {
     el.textContent = available ? 'ЦБ РФ · на ' + cnyDateFormat.format(new Date()) : '';
