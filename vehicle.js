@@ -45,15 +45,23 @@ function setPhoto(n){
   counter.textContent=`${photo} / ${photoCount}`;
   document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>b.classList.toggle('active',i+1===photo));
 
-  main.onload=()=>{
-    main.style.display='block';
-    placeholder.style.display='none';
-  };
-  main.onerror=()=>{
-    main.style.display='none';
-    placeholder.style.display='grid';
-  };
-  main.src=photoPath(photo);
+  const original = photoPath(photo);
+  const preview = photo === 1 ? `assets/cars/${car.id}/cover-640.webp` : original;
+  if (main.getAttribute('src') !== preview && main.getAttribute('src') !== original) {
+    main.onload=()=>{
+      main.style.display='block';
+      placeholder.style.display='none';
+    };
+    main.onerror=()=>{
+      if (main.getAttribute('src') !== original) {
+        main.src=original;
+        return;
+      }
+      main.style.display='none';
+      placeholder.style.display='grid';
+    };
+    main.src=preview;
+  }
 
   if(lightbox.classList.contains('open')){
     big.onload=()=>{
