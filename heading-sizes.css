@@ -1,0 +1,52 @@
+/* Heading hierarchy shared by site pages. */
+main .section-heading h2,
+main.catalog-page > .section-heading h2,
+main .order-intro h1,
+main.vehicle-page #carTitle,
+main .privacy-header h1 {
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1.12;
+}
+main #about .about-copy h2,
+main #process h2,
+main #featured .section-heading h2,
+main .order-cta h2 {
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.18;
+}
+main .process-steps h3,
+main .catalog-cta h3,
+main .cost-breakdown h3,
+main .car-detail-sections h3,
+main .detail-info h3 {
+  font-size: 21px;
+  line-height: 1.3;
+}
+@media (max-width: 700px) {
+  main #home .hero-copy h1 {
+    font-size: clamp(30px, 8vw, 38px);
+    line-height: 1.08;
+  }
+  main .section-heading h2,
+  main.catalog-page > .section-heading h2,
+  main .order-intro h1,
+  main.vehicle-page #carTitle {
+    font-size: clamp(28px, 7.5vw, 34px);
+    line-height: 1.14;
+  }
+  main #about .about-copy h2,
+  main #process h2,
+  main #featured .section-heading h2,
+  main .order-cta h2 {
+    font-size: clamp(23px, 6vw, 27px);
+    line-height: 1.2;
+  }
+  main #process .process-steps h3,
+  main #featured .catalog-cta h3,
+  main .cost-breakdown h3,
+  main.vehicle-page #detailPanel h3,
+  main .detail-info h3 {
+    font-size: 18px;
+    line-height: 1.3;
+  }
+}
