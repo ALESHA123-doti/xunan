@@ -4,6 +4,8 @@ function showSlide(i){current=(i+slides.length)%slides.length;
   if (!matchMedia('(max-width: 700px)').matches) {
     const photo = slides[current].querySelector('img[data-src]');
     if (photo) {
+      photo.srcset = photo.dataset.srcset;
+      photo.removeAttribute('data-srcset');
       photo.src = photo.dataset.src;
       photo.removeAttribute('data-src');
     }
