@@ -46,7 +46,9 @@ function setPhoto(n){
   document.querySelectorAll('#galleryThumbs button').forEach((b,i)=>b.classList.toggle('active',i+1===photo));
 
   const original = photoPath(photo);
-  const preview = photo === 1 ? `assets/cars/${car.id}/cover-640.webp` : original;
+  const preview = photo === 1
+    ? `assets/cars/${car.id}/cover-640.webp`
+    : original.replace(/\.jpg$/, '.webp');
   if (main.getAttribute('src') !== preview && main.getAttribute('src') !== original) {
     main.onload=()=>{
       main.style.display='block';
