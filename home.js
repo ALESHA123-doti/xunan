@@ -24,7 +24,7 @@ document.querySelectorAll('.hero-slide').forEach((slide,index)=>{
   img.onerror=()=>img.remove();slot.prepend(img);
 });
 const fmt=n=>new Intl.NumberFormat('ru-RU').format(n),featured=document.querySelector('#featuredCars');
-function addPhotoFallbacks(){document.querySelectorAll('.car-image img').forEach(img=>img.onerror=()=>{img.remove();const link=img.parentElement;link.classList.add('no-photo');link.textContent='Фото скоро появится'});}
+function addPhotoFallbacks(){document.querySelectorAll('.car-image img').forEach(img=>img.onerror=()=>{img.remove();const link=img.parentElement;link.classList.add('no-photo');link.textContent='Ожидается загрузка фото…'});}
 function renderFeatured(rate){
   const cars=window.XUNAN_CARS||[];
   if(!featured)return;
@@ -32,7 +32,7 @@ function renderFeatured(rate){
   addPhotoFallbacks();
 }
 featured?.addEventListener('error',()=>{},true);
-function addPhotoFallbacks(){document.querySelectorAll('.car-image img').forEach(img=>img.onerror=()=>{img.remove();const link=img.parentElement;link.classList.add('no-photo');link.textContent='Фото скоро появится'});}
+function addPhotoFallbacks(){document.querySelectorAll('.car-image img').forEach(img=>img.onerror=()=>{img.remove();const link=img.parentElement;link.classList.add('no-photo');link.textContent='Ожидается загрузка фото…'});}
 renderFeatured(window.XUNAN_RATE);
 window.addEventListener('xunan-rate-updated', event => {
   const cars = window.XUNAN_CARS || [];

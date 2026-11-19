@@ -75,7 +75,7 @@ function setPhoto(n){
       bigPlaceholder.style.display='block';
     };
     big.src=photoPath(photo);
-    bigPlaceholder.textContent=`Фото ${photo} из ${photoCount} будет добавлено`;
+    bigPlaceholder.textContent=`Ожидается загрузка фото…`;
   }
 }
 

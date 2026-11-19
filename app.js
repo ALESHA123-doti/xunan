@@ -41,7 +41,7 @@ if (grid) {
     grid.querySelectorAll('.car-image img').forEach(img => {
       img.onerror = () => {
         const placeholder = document.createElement('span');
-        placeholder.textContent = 'Фото скоро появится';
+        placeholder.textContent = 'Ожидается загрузка фото…';
         img.replaceWith(placeholder);
       };
     });
