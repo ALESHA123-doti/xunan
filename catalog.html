@@ -31,17 +31,41 @@
 }
 
 @media (max-width: 700px) {
-  .catalog-page .catalog-tools,
-  .catalog-page .filters,
-  .catalog-page .catalog-filter-toggle:not([hidden]) {
-    box-sizing: border-box;
-    width: 90%;
-    max-width: 420px;
-    margin-inline: auto;
+  .catalog-page .catalog-tools {
+    gap: 6px 10px;
   }
-  .catalog-page .catalog-tools .search,
-  .catalog-page .catalog-tools #sort {
+  .catalog-page .catalog-tools .search {
     box-sizing: border-box;
+    height: 42px;
+    padding-inline: 12px;
+  }
+  .catalog-page .catalog-tools .search input {
+    min-height: 0;
+    padding-block: 7px;
+  }
+  .catalog-page .catalog-tools #sort,
+  .catalog-page .catalog-tools .search-btn,
+  .catalog-page .catalog-filter-toggle:not([hidden]),
+  .catalog-page .filter-submit {
+    box-sizing: border-box;
+    min-height: 42px;
+    padding-block: 8px;
+  }
+  .catalog-page .filters {
+    padding: 10px;
+    gap: 6px 10px;
+  }
+  .catalog-page .filters > label {
+    margin-bottom: 0;
+  }
+  .catalog-page .filters h3 {
+    margin-bottom: 4px;
+  }
+  .catalog-page .filters select,
+  .catalog-page .filters input {
+    box-sizing: border-box;
+    min-height: 40px;
+    padding-block: 6px;
   }
 }
 </style><link rel="stylesheet" href="heading-sizes.css?v=1"></head><body>
