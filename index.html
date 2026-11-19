@@ -136,7 +136,7 @@
   #home .hero-slide:first-child {
     display: flex;
     min-height: 0;
-    padding: 30px 0 36px;
+    padding: 36px 0 100px;
     overflow: hidden;
   }
   #home .hero-slide:first-child .hero-copy {
@@ -167,6 +167,18 @@
     position: absolute;
     inset: 0;
     background: linear-gradient(180deg, rgba(25, 12, 12, .86), rgba(25, 12, 12, .7) 60%, rgba(25, 12, 12, .55));
+  }
+}
+
+@media (max-width: 700px) {
+  #home .hero-slide:first-child::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: 100px;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, .2) 25%, rgba(255, 255, 255, .65) 60%, #fff 100%);
   }
 }
 </style><link rel="preload" as="image" href="assets/images/hero-cars-desktop.webp" imagesrcset="assets/images/hero-cars-mobile.webp 640w, assets/images/hero-cars-desktop.webp 1200w" imagesizes="(max-width: 700px) 100vw, 65vw" fetchpriority="high"></head>
