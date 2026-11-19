@@ -2016,3 +2016,22 @@ body {font-size:18px;line-height:1.6}
   footer .footer-main > .brand { grid-area: 1 / 1; }
   footer .footer-main > .footer-contact { grid-area: 2 / 1; }
 }
+
+@media (max-width: 700px) {
+  header.topbar {
+    height: 92px;
+    padding-block: 8px;
+  }
+  header.topbar > .brand {
+    height: 72px;
+  }
+  header.topbar > .brand > .brand-logo {
+    max-height: 70px;
+  }
+  header.topbar > .button {
+    min-height: 54px;
+  }
+  html {
+    scroll-padding-top: 104px;
+  }
+}
