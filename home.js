@@ -31,7 +31,7 @@ const mobileHomepage = matchMedia('(max-width: 700px)');
 function renderFeatured(rate){
   const cars=window.XUNAN_CARS||[];
   if(!featured)return;
-  featured.innerHTML=cars.slice(0,mobileHomepage.matches ? 4 : 3).map(c=>'<article class="car-card"><div class="car-image"><a class="car-image-link" href="vehicle.html?id='+c.id+'" aria-label="Открыть '+c.title+'"><img src="assets/cars/'+c.id+'/cover-640.webp" alt="'+c.title+'" loading="lazy"></a></div><div class="car-content"><h3>'+c.title+'</h3><div class="car-trim">'+c.trim+'</div><div class="car-meta">'+c.color+'　·　'+fmt(c.mileage)+' км　·　'+c.engine+'</div><strong class="car-price">'+fmt(c.priceCNY)+' ¥</strong><small class="rub-price">'+formatCnyRubPrice(c.priceCNY,rate.value)+'</small><a class="button button-outline" href="vehicle.html?id='+c.id+'">Подробнее</a></div></article>').join('');
+  featured.innerHTML=cars.slice(0,mobileHomepage.matches ? 5 : 3).map(c=>'<article class="car-card"><div class="car-image"><a class="car-image-link" href="vehicle.html?id='+c.id+'" aria-label="Открыть '+c.title+'"><img src="assets/cars/'+c.id+'/cover-640.webp" alt="'+c.title+'" loading="lazy"></a></div><div class="car-content"><h3>'+c.title+'</h3><div class="car-trim">'+c.trim+'</div><div class="car-meta">'+c.color+'　·　'+fmt(c.mileage)+' км　·　'+c.engine+'</div><strong class="car-price">'+fmt(c.priceCNY)+' ¥</strong><small class="rub-price">'+formatCnyRubPrice(c.priceCNY,rate.value)+'</small><a class="button button-outline" href="vehicle.html?id='+c.id+'">Подробнее</a></div></article>').join('');
   addPhotoFallbacks();
 }
 featured?.addEventListener('error',()=>{},true);
@@ -46,12 +46,7 @@ function setupFeaturedCarousel() {
   const processHeading = process.querySelector('h2');
   const desktopLabel = stockLabel.textContent;
   const desktopProcessTitle = processHeading.textContent;
-  const controls = document.createElement('div');
-  controls.className = 'mobile-stock-pages';
-  controls.setAttribute('role','group');
-  controls.setAttribute('aria-label','Выбрать карточку');
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
-  let buttons = [];
   let timer;
   let visible = false;
   let pointerDown = false;
@@ -62,13 +57,12 @@ function setupFeaturedCarousel() {
   }
 
   function sync() {
-    if (!buttons.length) return;
+    if (!mobileHomepage.matches || !featured.childElementCount) return;
     active = 0;
     Array.from(featured.children).forEach((card, index) => {
       if (Math.abs(offset(card) - featured.scrollLeft) <
           Math.abs(offset(featured.children[active]) - featured.scrollLeft)) active = index;
     });
-    buttons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === active)));
   }
 
   function go(index, animated = false) {
@@ -82,9 +76,9 @@ function setupFeaturedCarousel() {
   function schedule() {
     clearTimeout(timer);
     if (!mobileHomepage.matches || motion.matches || !visible || pointerDown ||
-        document.hidden || buttons.length < 2 || featured.contains(document.activeElement)) return;
+        document.hidden || featured.childElementCount < 2 || featured.contains(document.activeElement)) return;
     timer = setTimeout(() => {
-      const next = (active + 1) % buttons.length;
+      const next = (active + 1) % featured.childElementCount;
       go(next, next !== 0);
       schedule();
     }, 5000);
@@ -100,25 +94,13 @@ function setupFeaturedCarousel() {
     processHeading.textContent = mobile ? 'Этапы перевозки' : desktopProcessTitle;
     if (mobile) {
       process.before(section);
-      featured.after(controls);
       featured.tabIndex = 0;
       featured.setAttribute('aria-label','Карточки автомобилей');
-      buttons = Array.from(featured.children, (card, index) => {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.setAttribute('aria-controls',featured.id);
-        button.setAttribute('aria-label','Карточка ' + (index + 1) + ': ' + card.querySelector('h3').textContent);
-        button.addEventListener('click',() => { go(index); schedule(); });
-        return button;
-      });
-      controls.replaceChildren(...buttons);
       go(0);
     } else {
       position.after(section);
-      controls.remove();
       featured.removeAttribute('tabindex');
       featured.removeAttribute('aria-label');
-      buttons = [];
     }
     schedule();
   }
@@ -132,10 +114,10 @@ function setupFeaturedCarousel() {
   featured.addEventListener('scroll',sync,{passive:true});
   featured.addEventListener('scrollend',schedule);
   featured.addEventListener('keydown',event => {
-    if (event.target !== featured || !buttons.length || !['ArrowRight','ArrowLeft'].includes(event.key)) return;
+    if (event.target !== featured || !featured.childElementCount || !['ArrowRight','ArrowLeft'].includes(event.key)) return;
     event.preventDefault();
     const direction = event.key === 'ArrowRight' ? 1 : -1;
-    go((active + direction + buttons.length) % buttons.length);
+    go((active + direction + featured.childElementCount) % featured.childElementCount);
     schedule();
   });
   featured.addEventListener('pointerdown',() => { pointerDown = true; schedule(); });
