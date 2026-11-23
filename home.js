@@ -31,7 +31,7 @@ const mobileHomepage = matchMedia('(max-width: 700px)');
 function renderFeatured(rate){
   const cars=window.XUNAN_CARS||[];
   if(!featured)return;
-  featured.innerHTML=cars.slice(0,mobileHomepage.matches ? 5 : 3).map(c=>'<article class="car-card"><div class="car-image"><a class="car-image-link" href="vehicle.html?id='+c.id+'" aria-label="Открыть '+c.title+'"><img src="assets/cars/'+c.id+'/cover-640.webp" alt="'+c.title+'" loading="lazy"></a></div><div class="car-content"><h3>'+c.title+'</h3><div class="car-trim">'+c.trim+'</div><div class="car-meta">'+c.color+'　·　'+fmt(c.mileage)+' км　·　'+c.engine+'</div><strong class="car-price">'+fmt(c.priceCNY)+' ¥</strong><small class="rub-price">'+formatCnyRubPrice(c.priceCNY,rate.value)+'</small><a class="button button-outline" href="vehicle.html?id='+c.id+'">Подробнее</a></div></article>').join('');
+  featured.innerHTML=cars.slice(0,5).map(c=>'<article class="car-card"><div class="car-image"><a class="car-image-link" href="vehicle.html?id='+c.id+'" aria-label="Открыть '+c.title+'"><img src="assets/cars/'+c.id+'/cover-640.webp" alt="'+c.title+'" loading="lazy"></a></div><div class="car-content"><h3>'+c.title+'</h3><div class="car-trim">'+c.trim+'</div><div class="car-meta">'+c.color+'　·　'+fmt(c.mileage)+' км　·　'+c.engine+'</div><strong class="car-price">'+fmt(c.priceCNY)+' ¥</strong><small class="rub-price">'+formatCnyRubPrice(c.priceCNY,rate.value)+'</small><a class="button button-outline" href="vehicle.html?id='+c.id+'">Подробнее</a></div></article>').join('');
   addPhotoFallbacks();
 }
 featured?.addEventListener('error',()=>{},true);
@@ -40,11 +40,7 @@ function addPhotoFallbacks(){document.querySelectorAll('.car-image img').forEach
 function setupFeaturedCarousel() {
   const section = featured.closest('#featured');
   const process = document.querySelector('#process');
-  const position = document.createComment('featured desktop position');
-  section.before(position);
-  const stockLabel = section.querySelector('.section-heading .eyebrow');
   const processHeading = process.querySelector('h2');
-  const desktopLabel = stockLabel.textContent;
   const desktopProcessTitle = processHeading.textContent;
   const catalogCard = document.createElement('a');
   catalogCard.className = 'mobile-stock-catalog';
@@ -61,11 +57,11 @@ function setupFeaturedCarousel() {
   let active = 0;
 
   function offset(card) {
-    return card.offsetLeft - featured.firstElementChild.offsetLeft;
+    return Math.min(featured.scrollWidth - featured.clientWidth, card.offsetLeft - featured.firstElementChild.offsetLeft);
   }
 
   function sync() {
-    if (!mobileHomepage.matches || !featured.childElementCount) return;
+    if (!featured.childElementCount) return;
     active = 0;
     Array.from(featured.children).forEach((card, index) => {
       if (Math.abs(offset(card) - featured.scrollLeft) <
@@ -81,36 +77,32 @@ function setupFeaturedCarousel() {
     sync();
   }
 
+  function advance(direction, animated = false) {
+    const last = featured.childElementCount - 1;
+    const atEnd = featured.scrollLeft >= featured.scrollWidth - featured.clientWidth - 1;
+    const next = direction > 0
+      ? (atEnd ? 0 : Math.min(active + 1, last))
+      : (featured.scrollLeft <= 1 ? last : Math.max(active - 1, 0));
+    go(next, animated && next !== 0);
+  }
+
   function schedule() {
     clearTimeout(timer);
-    if (!mobileHomepage.matches || motion.matches || !visible || pointerDown ||
+    if (motion.matches || !visible || pointerDown ||
         document.hidden || featured.childElementCount < 2 || featured.contains(document.activeElement)) return;
     timer = setTimeout(() => {
-      const next = (active + 1) % featured.childElementCount;
-      go(next, next !== 0);
+      advance(1, true);
       schedule();
     }, 5000);
   }
 
   function updateLayout() {
     const mobile = mobileHomepage.matches;
-    renderFeatured(window.XUNAN_RATE);
     section.classList.toggle('mobile-stock', mobile);
     const orderCopy = document.querySelector('.mobile-order-copy');
     orderCopy.hidden = !mobile;
-    stockLabel.textContent = mobile ? 'АВТО В НАЛИЧИИ' : desktopLabel;
     processHeading.textContent = mobile ? 'Этапы перевозки' : desktopProcessTitle;
-    if (mobile) {
-      process.before(section);
-      if (featured.childElementCount) featured.append(catalogCard);
-      featured.tabIndex = 0;
-      featured.setAttribute('aria-label','Карточки автомобилей');
-      go(0);
-    } else {
-      position.after(section);
-      featured.removeAttribute('tabindex');
-      featured.removeAttribute('aria-label');
-    }
+    go(0);
     schedule();
   }
 
@@ -126,7 +118,7 @@ function setupFeaturedCarousel() {
     if (event.target !== featured || !featured.childElementCount || !['ArrowRight','ArrowLeft'].includes(event.key)) return;
     event.preventDefault();
     const direction = event.key === 'ArrowRight' ? 1 : -1;
-    go((active + direction + featured.childElementCount) % featured.childElementCount);
+    advance(direction);
     schedule();
   });
   featured.addEventListener('pointerdown',() => { pointerDown = true; schedule(); });
@@ -136,6 +128,16 @@ function setupFeaturedCarousel() {
   featured.addEventListener('focusin',schedule);
   featured.addEventListener('focusout',() => setTimeout(schedule,0));
   document.addEventListener('visibilitychange',schedule);
+  renderFeatured(window.XUNAN_RATE);
+  if (featured.childElementCount) featured.append(catalogCard);
+  featured.tabIndex = 0;
+  featured.setAttribute('aria-label','Карточки автомобилей');
+  section.querySelectorAll('.desktop-stock-controls button').forEach(button => {
+    button.addEventListener('click',() => {
+      advance(Number(button.dataset.direction));
+      schedule();
+    });
+  });
   updateLayout();
 }
 
