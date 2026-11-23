@@ -46,9 +46,6 @@ function setupFeaturedCarousel() {
   const processHeading = process.querySelector('h2');
   const desktopLabel = stockLabel.textContent;
   const desktopProcessTitle = processHeading.textContent;
-  const note = document.createElement('p');
-  note.className = 'mobile-stock-note';
-  note.textContent = 'Рубли — ориентир по курсу ЦБ. При переводе через ВТБ применяется курс банка. Таможенные платежи рассчитываются отдельно.';
   const catalogLink = document.createElement('a');
   catalogLink.className = 'button mobile-stock-all';
   catalogLink.href = 'catalog.html';
@@ -103,11 +100,11 @@ function setupFeaturedCarousel() {
     section.classList.toggle('mobile-stock', mobile);
     const orderCopy = document.querySelector('.mobile-order-copy');
     orderCopy.hidden = !mobile;
-    stockLabel.textContent = mobile ? 'Авто в наличии' : desktopLabel;
+    stockLabel.textContent = mobile ? 'АВТО В НАЛИЧИИ' : desktopLabel;
     processHeading.textContent = mobile ? 'Этапы перевозки' : desktopProcessTitle;
     if (mobile) {
       process.before(section);
-      featured.after(controls, note, catalogLink);
+      featured.after(controls, catalogLink);
       featured.tabIndex = 0;
       featured.setAttribute('aria-label','Карточки автомобилей');
       buttons = Array.from(featured.children, (card, index) => {
@@ -122,7 +119,7 @@ function setupFeaturedCarousel() {
       go(0);
     } else {
       position.after(section);
-      for (const element of [controls, note, catalogLink]) element.remove();
+      for (const element of [controls, catalogLink]) element.remove();
       featured.removeAttribute('tabindex');
       featured.removeAttribute('aria-label');
       buttons = [];
