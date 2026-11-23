@@ -27,15 +27,136 @@ document.querySelectorAll('.hero-slide').forEach((slide,index)=>{
 });
 const fmt=n=>new Intl.NumberFormat('ru-RU').format(n),featured=document.querySelector('#featuredCars');
 function addPhotoFallbacks(){document.querySelectorAll('.car-image img').forEach(img=>img.onerror=()=>{img.remove();const link=img.parentElement;link.classList.add('no-photo');link.textContent='Ожидается загрузка фото…'});}
+const mobileHomepage = matchMedia('(max-width: 700px)');
 function renderFeatured(rate){
   const cars=window.XUNAN_CARS||[];
   if(!featured)return;
-  featured.innerHTML=cars.slice(0,3).map(c=>'<article class="car-card"><div class="car-image"><a class="car-image-link" href="vehicle.html?id='+c.id+'" aria-label="Открыть '+c.title+'"><img src="assets/cars/'+c.id+'/cover-640.webp" alt="'+c.title+'" loading="lazy"></a></div><div class="car-content"><h3>'+c.title+'</h3><div class="car-trim">'+c.trim+'</div><div class="car-meta">'+c.color+'　·　'+fmt(c.mileage)+' км　·　'+c.engine+'</div><strong class="car-price">'+fmt(c.priceCNY)+' ¥</strong><small class="rub-price">'+formatCnyRubPrice(c.priceCNY,rate.value)+'</small><a class="button button-outline" href="vehicle.html?id='+c.id+'">Подробнее</a></div></article>').join('');
+  featured.innerHTML=cars.slice(0,mobileHomepage.matches ? 4 : 3).map(c=>'<article class="car-card"><div class="car-image"><a class="car-image-link" href="vehicle.html?id='+c.id+'" aria-label="Открыть '+c.title+'"><img src="assets/cars/'+c.id+'/cover-640.webp" alt="'+c.title+'" loading="lazy"></a></div><div class="car-content"><h3>'+c.title+'</h3><div class="car-trim">'+c.trim+'</div><div class="car-meta">'+c.color+'　·　'+fmt(c.mileage)+' км　·　'+c.engine+'</div><strong class="car-price">'+fmt(c.priceCNY)+' ¥</strong><small class="rub-price">'+formatCnyRubPrice(c.priceCNY,rate.value)+'</small><a class="button button-outline" href="vehicle.html?id='+c.id+'">Подробнее</a></div></article>').join('');
   addPhotoFallbacks();
 }
 featured?.addEventListener('error',()=>{},true);
 function addPhotoFallbacks(){document.querySelectorAll('.car-image img').forEach(img=>img.onerror=()=>{img.remove();const link=img.parentElement;link.classList.add('no-photo');link.textContent='Ожидается загрузка фото…'});}
-renderFeatured(window.XUNAN_RATE);
+
+function setupFeaturedCarousel() {
+  const section = featured.closest('#featured');
+  const process = document.querySelector('#process');
+  const position = document.createComment('featured desktop position');
+  section.before(position);
+  const stockLabel = section.querySelector('.section-heading .eyebrow');
+  const processHeading = process.querySelector('h2');
+  const desktopLabel = stockLabel.textContent;
+  const desktopProcessTitle = processHeading.textContent;
+  const note = document.createElement('p');
+  note.className = 'mobile-stock-note';
+  note.textContent = 'Рубли — ориентир по курсу ЦБ. При переводе через ВТБ применяется курс банка. Таможенные платежи рассчитываются отдельно.';
+  const catalogLink = document.createElement('a');
+  catalogLink.className = 'button mobile-stock-all';
+  catalogLink.href = 'catalog.html';
+  catalogLink.textContent = 'Весь каталог';
+  const controls = document.createElement('div');
+  controls.className = 'mobile-stock-pages';
+  controls.setAttribute('role','group');
+  controls.setAttribute('aria-label','Выбрать карточку');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  let buttons = [];
+  let timer;
+  let visible = false;
+  let pointerDown = false;
+  let active = 0;
+
+  function offset(card) {
+    return card.offsetLeft - featured.firstElementChild.offsetLeft;
+  }
+
+  function sync() {
+    if (!buttons.length) return;
+    active = 0;
+    Array.from(featured.children).forEach((card, index) => {
+      if (Math.abs(offset(card) - featured.scrollLeft) <
+          Math.abs(offset(featured.children[active]) - featured.scrollLeft)) active = index;
+    });
+    buttons.forEach((button, index) => button.setAttribute('aria-pressed', String(index === active)));
+  }
+
+  function go(index, animated = false) {
+    const card = featured.children[index];
+    if (!card) return;
+    const behavior = animated && !motion.matches ? 'smooth' : 'instant';
+    featured.scrollTo({left: offset(card), behavior});
+    sync();
+  }
+
+  function schedule() {
+    clearTimeout(timer);
+    if (!mobileHomepage.matches || motion.matches || !visible || pointerDown ||
+        document.hidden || buttons.length < 2 || featured.contains(document.activeElement)) return;
+    timer = setTimeout(() => {
+      const next = (active + 1) % buttons.length;
+      go(next, next !== 0);
+      schedule();
+    }, 5000);
+  }
+
+  function updateLayout() {
+    const mobile = mobileHomepage.matches;
+    renderFeatured(window.XUNAN_RATE);
+    section.classList.toggle('mobile-stock', mobile);
+    const orderCopy = document.querySelector('.mobile-order-copy');
+    orderCopy.hidden = !mobile;
+    stockLabel.textContent = mobile ? 'Авто в наличии' : desktopLabel;
+    processHeading.textContent = mobile ? 'Этапы перевозки' : desktopProcessTitle;
+    if (mobile) {
+      process.before(section);
+      featured.after(controls, note, catalogLink);
+      featured.tabIndex = 0;
+      featured.setAttribute('aria-label','Карточки автомобилей');
+      buttons = Array.from(featured.children, (card, index) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.setAttribute('aria-controls',featured.id);
+        button.setAttribute('aria-label','Карточка ' + (index + 1) + ': ' + card.querySelector('h3').textContent);
+        button.addEventListener('click',() => { go(index); schedule(); });
+        return button;
+      });
+      controls.replaceChildren(...buttons);
+      go(0);
+    } else {
+      position.after(section);
+      for (const element of [controls, note, catalogLink]) element.remove();
+      featured.removeAttribute('tabindex');
+      featured.removeAttribute('aria-label');
+      buttons = [];
+    }
+    schedule();
+  }
+
+  mobileHomepage.addEventListener('change',updateLayout);
+  motion.addEventListener('change',schedule);
+  new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    schedule();
+  },{threshold:.6}).observe(featured);
+  featured.addEventListener('scroll',sync,{passive:true});
+  featured.addEventListener('scrollend',schedule);
+  featured.addEventListener('keydown',event => {
+    if (event.target !== featured || !buttons.length || !['ArrowRight','ArrowLeft'].includes(event.key)) return;
+    event.preventDefault();
+    const direction = event.key === 'ArrowRight' ? 1 : -1;
+    go((active + direction + buttons.length) % buttons.length);
+    schedule();
+  });
+  featured.addEventListener('pointerdown',() => { pointerDown = true; schedule(); });
+  for (const name of ['pointerup','pointercancel']) {
+    window.addEventListener(name,() => { if (pointerDown) { pointerDown = false; schedule(); } });
+  }
+  featured.addEventListener('focusin',schedule);
+  featured.addEventListener('focusout',() => setTimeout(schedule,0));
+  document.addEventListener('visibilitychange',schedule);
+  updateLayout();
+}
+
+if (featured) setupFeaturedCarousel();
+
 window.addEventListener('xunan-rate-updated', event => {
   const cars = window.XUNAN_CARS || [];
   featured?.querySelectorAll('.rub-price').forEach((price, index) => {
