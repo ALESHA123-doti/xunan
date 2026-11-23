@@ -135,13 +135,24 @@
 @media (max-width: 700px) {
   #home .hero-slide:first-child {
     display: flex;
-    min-height: 0;
-    padding: 36px 0 100px;
+    min-height: clamp(365px, 102vw, 460px);
+    padding: 48px 0 106px;
     overflow: hidden;
   }
   #home .hero-slide:first-child .hero-copy {
     z-index: 2;
-    padding-top: 0;
+    padding: 0 4%;
+  }
+  #home .hero-slide:first-child .hero-actions {
+    max-width: 460px;
+    gap: 8px;
+  }
+  #home .hero-slide:first-child .hero-actions .button {
+    min-height: 54px;
+    padding: 10px 6px;
+    font-size: clamp(12px, 3.65vw, 16px);
+    white-space: normal;
+    line-height: 1.18;
   }
   #home .hero-slide:first-child .hero-image-slot {
     position: absolute;
