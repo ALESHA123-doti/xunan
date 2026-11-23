@@ -46,10 +46,6 @@ function setupFeaturedCarousel() {
   const processHeading = process.querySelector('h2');
   const desktopLabel = stockLabel.textContent;
   const desktopProcessTitle = processHeading.textContent;
-  const catalogLink = document.createElement('a');
-  catalogLink.className = 'button mobile-stock-all';
-  catalogLink.href = 'catalog.html';
-  catalogLink.textContent = 'Весь каталог';
   const controls = document.createElement('div');
   controls.className = 'mobile-stock-pages';
   controls.setAttribute('role','group');
@@ -104,7 +100,7 @@ function setupFeaturedCarousel() {
     processHeading.textContent = mobile ? 'Этапы перевозки' : desktopProcessTitle;
     if (mobile) {
       process.before(section);
-      featured.after(controls, catalogLink);
+      featured.after(controls);
       featured.tabIndex = 0;
       featured.setAttribute('aria-label','Карточки автомобилей');
       buttons = Array.from(featured.children, (card, index) => {
@@ -119,7 +115,7 @@ function setupFeaturedCarousel() {
       go(0);
     } else {
       position.after(section);
-      for (const element of [controls, catalogLink]) element.remove();
+      controls.remove();
       featured.removeAttribute('tabindex');
       featured.removeAttribute('aria-label');
       buttons = [];
