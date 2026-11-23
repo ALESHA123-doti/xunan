@@ -46,6 +46,14 @@ function setupFeaturedCarousel() {
   const processHeading = process.querySelector('h2');
   const desktopLabel = stockLabel.textContent;
   const desktopProcessTitle = processHeading.textContent;
+  const catalogCard = document.createElement('a');
+  catalogCard.className = 'mobile-stock-catalog';
+  catalogCard.href = 'catalog.html';
+  const arrow = document.createElement('span');
+  arrow.className = 'mobile-stock-catalog-icon';
+  arrow.setAttribute('aria-hidden', 'true');
+  arrow.textContent = '→';
+  catalogCard.append(arrow, 'Перейти в каталог');
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   let timer;
   let visible = false;
@@ -94,6 +102,7 @@ function setupFeaturedCarousel() {
     processHeading.textContent = mobile ? 'Этапы перевозки' : desktopProcessTitle;
     if (mobile) {
       process.before(section);
+      if (featured.childElementCount) featured.append(catalogCard);
       featured.tabIndex = 0;
       featured.setAttribute('aria-label','Карточки автомобилей');
       go(0);
